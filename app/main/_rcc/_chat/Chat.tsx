@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import styles from './chat.module.css';
 
+import Message from './Message';
+
 export default function Chat(){
     const [inputVal, setInputVal] = useState('');
     const [messages, setMessages] = useState<string[]>([]);
@@ -10,7 +12,7 @@ export default function Chat(){
         <div className={styles.chat}>
             <div className={styles.chatBox}>
                 {messages.map((message, idx) => {
-                    return <div key={idx} className={styles.message}>{message}</div>
+                    return <Message key={idx} message={message}/>
                 })}
             </div>
             <div className={styles.inputs}>
