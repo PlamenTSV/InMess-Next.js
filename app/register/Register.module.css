@@ -1,0 +1,97 @@
+.background {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    margin-top: 10px;
+    animation: rotating 30s linear infinite;
+}
+
+@keyframes rotating {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.container {
+    width: 500px;
+    height: 700px;
+    background-color: #f1f1f1;
+    border-radius: 20px;
+
+    box-shadow: 0 0 10px rgb(145, 112, 141);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container h1 {
+    font-weight: 700;
+    font-size: 40px;
+    margin: 25px 0;
+}
+
+.container input[type="text"], .container input[type="password"]{
+    width: 70%;
+    height: 50px;
+    margin-bottom: 40px;
+
+    font-size: 19px;
+    padding-left: 5px;
+
+    background: none;
+    border: none;
+    outline: none;
+    border-bottom: 3px solid rgb(156, 156, 156);
+}
+
+.container input[type="text"]::placeholder, .container input[type="password"]::placeholder {
+    color: rgb(163, 163, 163);
+}
+
+.container input[type="button"]{
+    width: 71%;
+    height: 60px;
+
+    font-size: 20px;
+
+    color: white;
+    background-image: linear-gradient(120deg,  #4489d2, #7d53b5);
+    border: none;
+
+    transition: 0.2s;
+
+    margin-bottom: 40px;
+}
+
+.container input[type="button"]:hover{
+    cursor: pointer;
+    box-shadow: -3px 0px 5px #4489d2, 3px 0px 5px #7d53b5;
+    border-radius: 5px;
+}
+
+.container p{
+    color: gray;
+    margin-top: 0;
+    padding-top: 0;
+    margin-bottom: 30px;
+}
+
+.error {
+    padding: 0;
+    margin: 0;
+    height: 18px;
+}
+
+.link {
+    color: #7d53b5;
+}
