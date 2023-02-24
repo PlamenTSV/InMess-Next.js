@@ -1,0 +1,33 @@
+.navigation {
+    margin: 0;
+    padding-top: 10px;
+
+    height: 100vh;
+    width: 100px;
+
+    background-color: #26436a;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 15px;
+}
+
+.channelTest {
+    background-color: white;
+    width: 80%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: 0.2s;
+}
+
+.channelTest:hover {
+    cursor: pointer;
+    border-radius: 30%;
+}

@@ -1,7 +1,9 @@
 body {
-    background-image: linear-gradient(120deg,  #4489d2, #7d53b5);
+    background-image: linear-gradient(100deg,  #4489d2, #7d53b5);
     background-size: cover;
     background-repeat: no-repeat;
     height: 100vh;
     margin: 0;
+    overflow: hidden;
+    display: flex;
 }
