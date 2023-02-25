@@ -1,6 +1,6 @@
 .activeSection {
-    height: 100vh;
-    margin: 0;
+    height: 100%;
+    
     flex-grow: 1;
     
     background-color: rgba(0, 0, 0, 0.3);

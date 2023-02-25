@@ -1,8 +1,7 @@
 .chat {
     width: 60%;
-    height: 100vh;
+    height: 100%;
     margin: 0;
-    padding-top: 20px;
 
     background-color: rgba(0, 0, 0, 0.15);
 
@@ -17,6 +16,7 @@
 .chatBox {
     width: 95%;
     height: 85%;
+    margin-top: 20px;
 
     overflow-y: auto;
 }

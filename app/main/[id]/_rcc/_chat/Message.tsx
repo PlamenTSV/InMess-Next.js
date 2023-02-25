@@ -1,7 +1,7 @@
 import styles from './chat.module.css';
 
 import Image from 'next/image';
-import { useProvider } from '../../context/UserContext';
+import { useProvider } from '../../_context/UserContext';
 
 export default function Message({ message }: {message: string}){
     const {username} = useProvider();

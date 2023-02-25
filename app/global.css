@@ -4,6 +4,7 @@ body {
     background-repeat: no-repeat;
     height: 100vh;
     margin: 0;
-    overflow: hidden;
+    padding: 0;
+    
     display: flex;
 }

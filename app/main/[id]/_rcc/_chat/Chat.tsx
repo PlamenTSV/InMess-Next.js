@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './chat.module.css';
 
 import Message from './Message';
@@ -7,6 +7,10 @@ import Message from './Message';
 export default function Chat(){
     const [inputVal, setInputVal] = useState('');
     const [messages, setMessages] = useState<string[]>([]);
+
+    // useEffect(() => {
+
+    // })
 
     return(
         <div className={styles.chat}>

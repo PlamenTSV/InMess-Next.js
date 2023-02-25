@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function middleware(req: NextRequest) {
     if(req.cookies.get('sessionToken')){
         if(req.nextUrl.pathname.startsWith('/register') || req.nextUrl.pathname.endsWith('/')){
-            return NextResponse.redirect(new URL('/main', req.url));
+            return NextResponse.redirect(new URL('/main/home', req.url));
         }
     }
     else {
@@ -16,5 +16,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/', '/main', '/register']
+    matcher: ['/', '/main/:id', '/register']
 }
