@@ -8,7 +8,6 @@ import ActiveSection from "./_rcc/_activeSection/ActiveSection"
 
 
 export default function MainPage({ params }: {params: {id: string}}){
-    console.log(params.id);
     return(
         <UserProvider>
             <NavBar/>

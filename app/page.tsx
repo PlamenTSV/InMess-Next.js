@@ -4,7 +4,7 @@ import Link from 'next/link';
 import styles from './Login.module.css';
 import Image from 'next/image';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
@@ -14,8 +14,6 @@ export default function LoginPage() {
   const password = useRef<HTMLInputElement>(null);
 
   const [errorMessage, setErrorMessage] = useState();
-
-  useEffect(() => console.log('asasa'), []);
 
   return (
     <main className={styles.background}>
@@ -45,7 +43,7 @@ export default function LoginPage() {
           if(!loginReq.ok)setErrorMessage(loginRes.message);
           else {
             console.log(loginRes.message);
-            window.location.href = '/main';
+            window.location.href = '/main/home';
           }
           
         }}

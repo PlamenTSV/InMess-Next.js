@@ -1,8 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import styles from './navigation.module.css';
 import { useRouter } from 'next/navigation';
+
+import styles from './navigation.module.css';
+
+import AddChannel from './popup/AddChannel';
 
 interface Channel {
     name: string
@@ -10,6 +13,7 @@ interface Channel {
 
 export default function NavBar(){
     const [channels, setChannels] = useState<Channel[]>([]);
+    const [showPopup, setShowPopup] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -42,8 +46,10 @@ export default function NavBar(){
                 return <div key={ idx } className={styles.channel} onClick={() => changeChannel(channel.name)}>  </div>
             })}
 
-            <img src={'/plus.svg'} alt="logo button" className={styles.channel}/>
-            
+            <img src={'/plus.svg'} alt="logo button" className={styles.channel}
+            onClick={() => setShowPopup(true)}
+            />
+            {showPopup? <AddChannel setShowPopup={setShowPopup}/> : ''}
         </div>
     )
 }
