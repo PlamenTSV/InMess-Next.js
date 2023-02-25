@@ -32,8 +32,36 @@
     align-items: center;
 }
 
+.message:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
 .message > div {
     color: white;
+}
+
+
+
+.content > p {
+    margin: 0;
+}
+
+.trash {
+    margin-left: auto;
+    margin-right: 20px;
+    padding: 3px;
+
+    display: none;
+    border-radius: 50%;
+}
+
+.trash:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.message:hover .trash {
+    display: block;
 }
 
 .pic {

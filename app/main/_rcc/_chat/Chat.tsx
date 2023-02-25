@@ -19,6 +19,7 @@ export default function Chat(){
                 <div style={{width: '50px', height: '50px'}}>
 
                 </div>
+
                 <input type="text" placeholder='Type a message.....'
                 value={inputVal}
                 onChange={(event) => setInputVal(event.target.value)}
