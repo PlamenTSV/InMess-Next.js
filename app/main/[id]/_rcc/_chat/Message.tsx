@@ -17,7 +17,7 @@ export default function Message({ message }: {message: string}){
                 <p>{message}</p>
             </div>
 
-            <Image src={'/trash-2.svg'} alt='trash icon' width={20} height={20} className={styles.trash}/>
+            <Image src={'/trash-x-filled.svg'} alt='trash icon' width={20} height={20} className={styles.trash}/>
         </div>
     )
 }

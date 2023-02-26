@@ -5,11 +5,8 @@ import styles from './Login.module.css';
 import Image from 'next/image';
 
 import React, { useState, useRef } from 'react';
-import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
-  let router = useRouter();
-
   const username = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
 

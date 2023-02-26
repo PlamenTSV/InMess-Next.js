@@ -1,7 +1,86 @@
 .details {
+    position: relative;
+
     margin: 0;
     height: 100%;
     width: 250px;
 
     background-color: #305483;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    color: #ab8af0;
+}
+
+.details h1 {
+    border-bottom: 2px solid #ad92e3;
+    padding-bottom: 15px;
+}
+
+.controls {
+    margin-top: auto;
+    align-self: flex-start;
+    margin-left: 10px;
+    margin-bottom: 5px;
+
+    display: flex;
+    gap: 5px;
+}
+
+.leave, .copy {
+    width: 25px;
+    aspect-ratio: 1/1;
+    padding: 5px;
+
+    border: 2px solid #977ad4;
+    border-radius: 10px;
+
+    transition: 0.2s;
+}
+
+.leave:hover, .copy:hover {
+    cursor: pointer;
+    background-color: #ded2f6;
+}
+
+.leaveTooltip {
+    position: absolute;
+    bottom: 50px;
+    left: 5px;
+
+    background-color: rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+    padding: 3px;
+
+    border-radius: 5px;
+    border: 1px solid #977ad4;
+
+    display: none;
+}
+
+.leave:hover~.leaveTooltip {
+    display: block;
+}
+
+.copyTooltip {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+
+    background-color: rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+    padding: 3px;
+
+    border-radius: 5px;
+    border: 1px solid #977ad4;
+
+    display: none;
+}
+
+.copy:hover~.copyTooltip {
+    display: block;
 }
