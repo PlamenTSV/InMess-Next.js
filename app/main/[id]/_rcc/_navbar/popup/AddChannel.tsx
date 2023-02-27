@@ -1,8 +1,11 @@
 'use client';
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { Channel, useProvider } from '../../../_context/UserContext';
 import styles from './popup.module.css'
 
-export default function AddChannel({ setShowPopup }: { setShowPopup: Dispatch<SetStateAction<boolean>>}){
+export default function AddChannel(props: any){
+    const { setChannels } = useProvider();
+
     const containerRef = useRef<HTMLDivElement>(null);
     const channelName = useRef<HTMLInputElement>(null);
 
@@ -13,7 +16,7 @@ export default function AddChannel({ setShowPopup }: { setShowPopup: Dispatch<Se
     useEffect(() => {
         function handleClickOutside(event: MouseEvent){
             if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-                setShowPopup(false);
+                props.setShowPopup(false);
             }
         }
         
@@ -27,7 +30,7 @@ export default function AddChannel({ setShowPopup }: { setShowPopup: Dispatch<Se
     function changeImage(target: EventTarget & HTMLInputElement){
         if(target.files && target.files[0]){
             setChannelImage(URL.createObjectURL(target.files[0]));
-            
+
             reader.readAsDataURL(target.files[0]);
             reader.onloadend = () => {
                 setBase64Image(reader.result!);
@@ -60,6 +63,11 @@ export default function AddChannel({ setShowPopup }: { setShowPopup: Dispatch<Se
                         name: channelName.current?.value
                     })
                 })
+
+                setChannels((old: Channel[]) => [...old, {
+                    name: channelName.current?.value,
+                    icon: channelImage
+                }])
             }}
             />
             </div>

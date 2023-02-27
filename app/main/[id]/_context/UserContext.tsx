@@ -2,7 +2,8 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 
 export interface Channel {
-    name: string
+    name: string,
+    icon: string
 }
 
 const UserContext = createContext<any>(null);
@@ -18,6 +19,7 @@ export default function UserProvider({ children }: {children: ReactNode}){
 
     useEffect(() => {
         retrieveSession();
+        console.log('reloaded context');
     }, [])
 
     const retrieveSession = async () => {
