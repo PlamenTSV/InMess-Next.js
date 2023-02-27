@@ -7,12 +7,13 @@ export default function AddChannel({ setShowPopup }: { setShowPopup: Dispatch<Se
     const channelName = useRef<HTMLInputElement>(null);
 
     const [channelImage, setChannelImage] = useState('');
+    const [base64Image, setBase64Image] = useState<string | ArrayBuffer>('');
     const reader = new FileReader();
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent){
             if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-                setShowPopup(false)
+                setShowPopup(false);
             }
         }
         
@@ -23,16 +24,13 @@ export default function AddChannel({ setShowPopup }: { setShowPopup: Dispatch<Se
         }
     }, [])
 
-    useEffect(() => {
-        console.log(channelImage)
-    }, [channelImage])
-
     function changeImage(target: EventTarget & HTMLInputElement){
         if(target.files && target.files[0]){
             setChannelImage(URL.createObjectURL(target.files[0]));
+            
             reader.readAsDataURL(target.files[0]);
             reader.onloadend = () => {
-                console.log(reader.result);
+                setBase64Image(reader.result!);
             }
         }
     }
@@ -58,7 +56,7 @@ export default function AddChannel({ setShowPopup }: { setShowPopup: Dispatch<Se
                         'Content-type': 'application/json'
                     },
                     body: JSON.stringify({
-                        image: channelImage,
+                        image: base64Image,
                         name: channelName.current?.value
                     })
                 })

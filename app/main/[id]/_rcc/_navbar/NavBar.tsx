@@ -6,13 +6,12 @@ import { useRouter } from 'next/navigation';
 import styles from './navigation.module.css';
 
 import AddChannel from './popup/AddChannel';
+import { Channel, useProvider } from '../../_context/UserContext';
 
-interface Channel {
-    name: string
-}
+
 
 export default function NavBar(){
-    const [channels, setChannels] = useState<Channel[]>([]);
+    const {channels, setChannels} = useProvider();
     const [showPopup, setShowPopup] = useState(false);
     const router = useRouter();
 
@@ -42,7 +41,7 @@ export default function NavBar(){
             />
             <span></span>
 
-            {channels.map((channel, idx) => {
+            {channels.map((channel: Channel, idx: number) => {
                 return <div key={ idx } className={styles.channel} onClick={() => changeChannel(channel.name)}>  </div>
             })}
 

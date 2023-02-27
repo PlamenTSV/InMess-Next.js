@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useProvider } from '../../_context/UserContext';
 
 export default function Message({ message }: {message: string}){
-    const {username} = useProvider();
+    const {session} = useProvider();
 
     return(
         <div className={styles.message}>
@@ -12,7 +12,7 @@ export default function Message({ message }: {message: string}){
 
             <div className={styles.content}>
                 <div className={styles.messageInfo}>
-                   {username}
+                   {session.username}
                 </div>
                 <p>{message}</p>
             </div>

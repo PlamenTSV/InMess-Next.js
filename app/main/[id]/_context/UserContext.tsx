@@ -1,5 +1,9 @@
 'use client';
-import { ReactNode, createContext, useContext, useState } from "react";
+import { ReactNode, createContext, useContext, useEffect, useState } from "react";
+
+export interface Channel {
+    name: string
+}
 
 const UserContext = createContext<any>(null);
 
@@ -9,10 +13,22 @@ export function useProvider(){
 }
 
 export default function UserProvider({ children }: {children: ReactNode}){
-    const [username, setUsername] = useState('John');
-    const [email, setEmail] = useState('sampleemail@abv.bg');
+    const [channels, setChannels] = useState<Channel[]>([]);
+    const [session, setSession] = useState();
 
-    const values = {username, setUsername, email, setEmail};
+    useEffect(() => {
+        retrieveSession();
+    }, [])
+
+    const retrieveSession = async () => {
+        const sessionReq = await fetch('/api/session');
+        const sessionData = await sessionReq.json();
+
+        console.log(sessionData);
+        setSession(sessionData);
+    }
+
+    const values = {channels, setChannels, session, setSession};
 
     return (
         <UserContext.Provider value={values}>
