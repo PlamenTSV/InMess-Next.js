@@ -16,6 +16,7 @@ export function useProvider(){
 
 export default function UserProvider({ children }: {children: ReactNode}){
     const [channels, setChannels] = useState<Channel[]>([]);
+    const [activeChannel, setActiveChannel] = useState<Channel>();
     const [session, setSession] = useState();
 
     useEffect(() => {
@@ -39,7 +40,7 @@ export default function UserProvider({ children }: {children: ReactNode}){
         setChannels(channelsData.channels);
     }
 
-    const values = {channels, setChannels, session, setSession};
+    const values = {channels, setChannels, session, setSession, activeChannel, setActiveChannel};
 
     return (
         <UserContext.Provider value={values}>

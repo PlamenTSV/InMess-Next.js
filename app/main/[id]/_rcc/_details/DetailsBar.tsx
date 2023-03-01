@@ -1,11 +1,14 @@
 'use client';
+import { useProvider } from '../../_context/UserContext';
 import styles from './details.module.css';
 
 export default function DetailsBar(){
+    const { activeChannel } = useProvider();
+
     return(
         <div className={styles.details}>
-            <h1>Channel name</h1>
-            <img src="aa" alt="channel banner"/>
+            <h1>{ activeChannel?.name }</h1>
+            <img src={ activeChannel?.icon } alt="channel banner"/>
 
             <div className={styles.controls}>
                 <img src="/leave.svg" alt="leave-icon" className={styles.leave}/>
