@@ -2,6 +2,7 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 
 export interface Channel {
+    id: string
     name: string,
     icon: string
 }
@@ -19,7 +20,7 @@ export default function UserProvider({ children }: {children: ReactNode}){
 
     useEffect(() => {
         retrieveSession();
-        console.log('reloaded context');
+        retrieveChannels();
     }, [])
 
     const retrieveSession = async () => {
@@ -28,6 +29,14 @@ export default function UserProvider({ children }: {children: ReactNode}){
 
         console.log(sessionData);
         setSession(sessionData);
+    }
+
+    const retrieveChannels = async () => {
+        const channelsReq = await fetch('/api/channel/loadAll');
+        const channelsData = await channelsReq.json();
+
+        console.log(channelsData.channels);
+        setChannels(channelsData.channels);
     }
 
     const values = {channels, setChannels, session, setSession};

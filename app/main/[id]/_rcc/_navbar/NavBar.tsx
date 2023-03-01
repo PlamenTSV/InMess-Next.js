@@ -27,7 +27,7 @@ export default function NavBar(){
             <span></span>
 
             {channels.map((channel: Channel, idx: number) => {
-                return <img src={channel.icon} alt='Channel' key={ idx } className={styles.channel} onClick={() => changeChannel(channel.name)}/> 
+                return <img src={channel.icon} alt='Channel' key={ idx } className={styles.channel} onClick={() => changeChannel(channel.id)}/> 
             })}
 
             <img src={'/plus.svg'} alt="logo button" className={styles.channel}

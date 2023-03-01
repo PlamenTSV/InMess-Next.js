@@ -15,18 +15,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const {image, name} = req.body;
 
         cloudinary.v2.uploader.upload(image, {use_filename: true, folder: 'channel-banners', responsive_breakpoints: { create_derived: true, bytes_step: 20000, min_width: 200, max_width: 1000 }})
-        .then((response: CloudinaryResponse) => {
-            const cloudImage = response.etag;
-            console.log(cloudImage);
+        .then(async (response: CloudinaryResponse) => {
 
             const channel = new Channel({
                 name: name,
                 icon: response.etag
             })
-            channel.save();
-        })
-
-        res.status(200).end();
-        resolve();
+            const newChannel = await channel.save();
+            
+            res.status(200).send({id: newChannel._id.toString()});
+            resolve();
+        })        
     })
 }

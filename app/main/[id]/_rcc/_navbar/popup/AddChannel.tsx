@@ -53,7 +53,7 @@ export default function AddChannel(props: any){
             <input type="text" placeholder='Name of your channel...' ref={channelName}/>
             <input type="button" value={'Create channel'} 
             onClick={async () => {
-                await fetch('/api/channel/addChannel', {
+                const addChannel = await fetch('/api/channel/addChannel', {
                     method: 'POST',
                     headers: {
                         'Content-type': 'application/json'
@@ -64,7 +64,10 @@ export default function AddChannel(props: any){
                     })
                 })
 
+                const { id } = await addChannel.json();
+
                 setChannels((old: Channel[]) => [...old, {
+                    id: id,
                     name: channelName.current?.value,
                     icon: channelImage
                 }])

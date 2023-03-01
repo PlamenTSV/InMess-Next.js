@@ -9,11 +9,11 @@ import ActiveSection from "./_rcc/_activeSection/ActiveSection"
 
 export default function MainPage({ params }: {params: {id: string}}){
     return(
-        <UserProvider>
+        <>
             <NavBar/>
             <DetailsBar/>
             {params.id === 'home'? <HomePage/> : <Chat/>}
             <ActiveSection/>
-        </UserProvider>
+        </>
     )
 }
