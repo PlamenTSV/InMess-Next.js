@@ -14,12 +14,16 @@
 
 .header {
     display: flex;
-    background-color: rgba(0, 0, 0, 0.2);
+    align-items: center;
+    gap: 15px;
 }
 
-.header > img {
-    width: 50px;
+.pfp{
+    width: 140px;
     aspect-ratio: 1/1;
+
+    background-color: white;
+    border-radius: 50%;
 }
 
 .homepage > h2 {
