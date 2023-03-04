@@ -3,11 +3,13 @@
     height: 100%;
     margin: 0;
 
-    background-color: rgba(0, 255, 0, 0.5);
-
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    gap: 30px;
+
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .header {
@@ -17,5 +19,44 @@
 
 .header > img {
     width: 50px;
+    aspect-ratio: 1/1;
+}
+
+.homepage > h2 {
+    margin-top: 50px;
+    margin-bottom: 0;
+
+    border-bottom: 2px solid black;
+    padding-bottom: 5px;
+}
+
+.tips {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 15px;
+    width: 95%;
+}
+
+.tips > div {
+    width: 350px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 0px 0px 5px black;
+
+    font-size: 18px;
+    text-align: center;
+    color: white;
+}
+
+.tips > div img {
+    margin: 12px 0;
+    padding: 5px;
+    width: 250px;
     aspect-ratio: 1/1;
 }
