@@ -26,7 +26,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           httpOnly: true,
           secure: true,
           sameSite: 'strict', 
-          maxAge: 60 * 60 * 1000 * 24,
+          maxAge: 60 * 60  * 24,
           path: '/'
         }));
         

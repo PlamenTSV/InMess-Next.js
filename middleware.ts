@@ -16,9 +16,9 @@ const isTokenExpired = (token: string): boolean => {
 export async function middleware(req: NextRequest) {
     
 
-    if(req.cookies.get('sessionToken') && isTokenExpired(req.cookies.get('sessionToken')!.value)){
-        
-    }
+    // if(req.cookies.get('sessionToken') && isTokenExpired(req.cookies.get('sessionToken')!.value)){
+    //     return NextResponse.redirect(new URL('/', req.url))
+    // }
 
     const sessionToken = req.cookies.get('sessionToken')?.value;
 

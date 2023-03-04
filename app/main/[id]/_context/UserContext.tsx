@@ -26,6 +26,9 @@ export default function UserProvider({ children }: {children: ReactNode}){
 
     const retrieveSession = async () => {
         const sessionReq = await fetch('/api/session');
+        if(!sessionReq.ok){
+            window.location.href = '/';
+        }
         const sessionData = await sessionReq.json();
 
         console.log(sessionData);

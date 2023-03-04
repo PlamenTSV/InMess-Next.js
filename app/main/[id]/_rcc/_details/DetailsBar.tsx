@@ -17,7 +17,7 @@ export default function DetailsBar(){
                 </div>
 
                 <img src="/copy.svg" alt="leave-icon" className={styles.copy}
-                onClick={() => navigator.clipboard.writeText('az')}
+                onClick={() => navigator.clipboard.writeText(activeChannel?.id)}
                 />
                 <div className={styles.copyTooltip}>
                     Copy code
