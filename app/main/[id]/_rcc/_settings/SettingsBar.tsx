@@ -1,3 +1,4 @@
+'use client';
 import styles from './settings.module.css';
 
 export default function SettingsBar() {
@@ -23,6 +24,15 @@ export default function SettingsBar() {
                     <img src="/edit.svg" alt="edit button" />
                 </div>
            </div>
+
+            <div className={styles.logout}
+            onClick={async () => {
+                const logoutReq = await fetch('/api/logout');
+                if(logoutReq.ok) window.location.href = '/';
+            }}>
+                <img src="/logout.svg" alt="logout-icon"/>
+                Log out
+            </div>
         </div>
     )
 }

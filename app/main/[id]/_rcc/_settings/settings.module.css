@@ -23,11 +23,13 @@
     margin-top: 30px;
 }
 
-
-
 .credentials {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
     width: 95%;
-    height: 500px;
+    height: 300px;
     border-radius: 5px;
 
     background-color: rgb(82, 123, 203, 0.6);
@@ -66,4 +68,33 @@
 .credentials > div img:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.1);
+}
+
+.logout {
+    position: absolute;
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    color: #FF0055;
+    font-weight: bold;
+
+    bottom: 10px;
+    left: 10px;
+    padding: 2px 6px;
+
+    border: 2px solid #FF0055;
+    border-radius: 10px;
+
+}
+
+.logout > img {
+    width: 25px;
+    aspect-ratio: 1/1;
+}
+
+.logout:hover {
+    cursor: pointer;
+    background-color: #ff00554e;
 }
