@@ -52,9 +52,13 @@ export default function Register(){
                             password: password.current?.value,
                         })
                     });
+
                     const registerRes = await registerReq.json();
 
-                    console.log(registerRes.message);
+                    if(!registerReq.ok) setErrorMessage(registerRes.message)
+                    else {
+                        window.location.href = '/main/home';
+                    }
                 }}
                 />
                 {(errorMessage) ? 

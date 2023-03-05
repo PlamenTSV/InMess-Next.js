@@ -3,6 +3,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import connectMongo from "@/database/connection";
 import User from "../../models/User";
 
+import { serialize } from "cookie";
+
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -18,23 +20,22 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const user = new User({
             username: username,
             email: email,
-            password: hashedPassword
+            password: hashedPassword,
+            icon: ''
         })
 
         try{
             const newRegister = await user.save();
 
-            const sessionToken = jwt.sign({newRegister}, process.env.SESSION_SECRET, {
-                expiresIn: '1h',
-                cookie: {
-                    name: 'session',
-                    httpOnly: true,
-                    secure: true, 
-                    maxAge: 60 * 60 * 1000 //1 hour
-                }
-            });
+            const sessionToken = jwt.sign({user: newRegister}, process.env.SESSION_SECRET, { expiresIn: '1d' });
 
-            res.setHeader('Set-Cookie', `sessionToken=${sessionToken}`);
+            res.setHeader('Set-Cookie', serialize('sessionToken', sessionToken, {
+                httpOnly: true,
+                secure: true,
+                sameSite: 'strict', 
+                maxAge: 60 * 60  * 24,
+                path: '/'
+            }));
 
         } catch(error){
             console.log(error);

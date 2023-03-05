@@ -8,7 +8,7 @@ export default function HomePage(){
     return (
         <div className={styles.homepage}>
             <div className={styles.header}>
-                <div className={styles.pfp}></div>
+                <img src='/ProfileIcon.png' alt='pfp' className={styles.pfp}/>
                 <div>
                     <h1>Welcome!</h1>
                     <h1>{session?.username}</h1>
@@ -18,11 +18,11 @@ export default function HomePage(){
             <div className={styles.tips}>
                 <div>
                     Click the "+" icon on the left-side navbar to either join or create your own channel.
-                    <img src="/tip1.svg" alt="talking icon" />
+                    <img src="/tip2.svg" alt="talking icon" />
                 </div>
                 <div>
                     That's it! Invite your friends by copying the code of the channel and enjoy yourselves.
-                    <img src="/tip2.svg" alt="talking icon" />
+                    <img src="/tip1.svg" alt="talking icon" />
                 </div>
             </div>
         </div>

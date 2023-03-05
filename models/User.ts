@@ -12,6 +12,9 @@ const users = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    icon: {
+        type: String
     }
 })
 
