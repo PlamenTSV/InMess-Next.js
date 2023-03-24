@@ -17,8 +17,15 @@
 .settings > h2 {
     border-bottom: 2px solid #ab8af0;
     padding-bottom: 15px;
+    width: 70%;
+    text-align: center;
 
     margin-top: 30px;
+}
+
+.settings > h3 {
+    border-bottom: 2px solid #ab8af0;
+    padding-bottom: 15px;
 }
 
 .credentials {
@@ -116,6 +123,23 @@
 .cred img:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.1);
+}
+
+.changePassword {
+    width: 55%;
+    height: 35px;
+
+    border-radius: 5px;
+    border: 1px solid black;
+
+    color: white;
+    font-size: 16px;
+    background-color: #ab8af0;
+}
+
+.changePassword:hover {
+    cursor: pointer;
+    background-color: #bca5ed;
 }
 
 .logout {
