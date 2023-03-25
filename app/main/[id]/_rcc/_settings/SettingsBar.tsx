@@ -10,7 +10,7 @@ export default function SettingsBar() {
 
     return(
         <>  
-            {passwordPopup? <PasswordPopup setPasswordPopup={setPasswordPopup}/> : ''}
+            {passwordPopup? <PasswordPopup setPasswordPopup={setPasswordPopup} userID={session.id}/> : ''}
             <div className={styles.settings}>
             <h2>Profile</h2>
 

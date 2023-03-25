@@ -1,18 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './password.module.css';
 
-export default function PasswordPopup( { setPasswordPopup }: any){
+export default function PasswordPopup( { setPasswordPopup, userID }: any){
     const containerRef = useRef<HTMLDivElement>(null);
 
     const oldPassword = useRef<HTMLInputElement>(null);
     const newPassword = useRef<HTMLInputElement>(null);
     const confirmNewPassword = useRef<HTMLInputElement>(null);
 
-    const [errors, setErrors] = useState([
-        '',
-        '',
-        ''
-    ]);
+    const [errors, setErrors] = useState(['', '', '']);
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent){
@@ -30,29 +26,34 @@ export default function PasswordPopup( { setPasswordPopup }: any){
 
     async function updatePassword(){
         setErrors(['', '', '']);
-    
+
         if(!newPassword.current?.value || newPassword.current.value.length === 0){
-            setErrors(errors.map((err, index) => (index === 1)? '- New password cannot be empty' : err));
+            setErrors(errors.map((err, index) => (index === 1)? '- Field cannot be empty' : ''));
+            return;
         }
         if(newPassword.current?.value !== confirmNewPassword.current?.value){
-            setErrors(errors.map((err, index) => (index === 2)? '- Passwords don\'t match' : err));
-        } else {
-            const updateReq = await fetch('/api/account/updatePassword', {
-                method: 'PUT',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    newPassword: newPassword.current?.value,
-                    oldPassword: oldPassword.current?.value
-                })
-            });
-            if(!updateReq.ok){
-                return;
-            }
-            const updateRes = await updateReq.json();
-            console.log(updateRes);
+            setErrors(errors.map((err, index) => (index === 2)? '- Passwords don\'t match' : ''));
+            return;
         }
+
+        const updateReq = await fetch('/api/account/updatePassword', {
+            method: 'PUT',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                userID: userID,
+                newPassword: newPassword.current?.value,
+                oldPassword: oldPassword.current?.value
+            })
+        });
+        if(!updateReq.ok){
+            setErrors(errors.map((err, index) => (index === 0)? '- Wrong password' : ''));
+            return;
+        }
+        const updateRes = await updateReq.json();
+        console.log(updateRes);
+        setPasswordPopup(false);
     }
 
     return (
@@ -62,7 +63,7 @@ export default function PasswordPopup( { setPasswordPopup }: any){
                 <p>Enter your new and old passwords</p>
 
                 <div>
-                    <p>Current password</p>
+                    <p>Current password <span style={{color: 'red'}}>{errors[0]}</span></p>
                     <input type="password" ref={oldPassword}/>
                 </div>
                 <div>
