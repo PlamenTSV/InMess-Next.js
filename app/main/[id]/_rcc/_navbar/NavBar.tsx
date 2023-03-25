@@ -18,10 +18,10 @@ export default function NavBar(){
     function changeChannel(channel: Channel | undefined){
         if(channel){
             setActiveChannel(channel);
+            localStorage.setItem('Active channel', JSON.stringify(channel));
             router.push(`/main/${channel.id}`);
         }
         else {
-            setActiveChannel();
             router.push('main/home');
         }
     }

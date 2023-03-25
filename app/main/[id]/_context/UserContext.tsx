@@ -18,10 +18,16 @@ export default function UserProvider({ children }: {children: ReactNode}){
     const [channels, setChannels] = useState<Channel[]>([]);
     const [activeChannel, setActiveChannel] = useState<Channel>();
     const [session, setSession] = useState();
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        if(localStorage.getItem('Active channel')){
+            setActiveChannel(JSON.parse(localStorage.getItem('Active channel') || ''));
+        }
+
         retrieveSession();
         retrieveChannels();
+        setIsLoading(false);
     }, [])
 
     const retrieveSession = async () => {
@@ -45,7 +51,7 @@ export default function UserProvider({ children }: {children: ReactNode}){
 
     const values = {channels, setChannels, session, setSession, activeChannel, setActiveChannel};
 
-    return (
+    return isLoading? <h1>Loading...</h1> :  (
         <UserContext.Provider value={values}>
             {children}
         </UserContext.Provider>
