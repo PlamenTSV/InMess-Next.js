@@ -20,8 +20,8 @@
     width: 500px;
     height: 650px;
 
-    background-color: rgb(174, 200, 223);
-    box-shadow: 0 0 2px black;
+    background-color: #f1f1f1;
+    box-shadow: 0 0 10px black;
 
     border-radius: 20px;
 
@@ -46,6 +46,9 @@
 .container img:hover{
     border-radius: 30%;
     cursor: pointer;
+
+    box-shadow: -5px 0 15px #4489d2,
+                5px 0 15px #7c53b5;
 }
 
 .container h3, .container h2{
@@ -57,10 +60,13 @@
 }
 
 .container input[type="text"]{
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
     border: none;
     outline: none;
+    background: none;
+    background-color: white;
+    border-bottom: 3px solid rgb(156, 156, 156);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     
     box-sizing: border-box;
 
@@ -69,32 +75,34 @@
     padding: 0 5px;
 
     font-size: 18px;
+    text-align: center;
 }
 
 .container input[type="button"]{
     box-sizing: border-box;
-    border: 1px solid transparent;
+    border: none;
+    border-radius: 10px;
 
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-
-    background-color: #ab8af0;
+    background-image: linear-gradient(100deg,  #4489d2, #7d53b5);
 
     font-size: 16px;
     font-weight: bold;
+    color: white;
 
     transition: 0.1s;
 }
 
 .container input[type="button"]:hover{
     cursor: pointer;
-    background-color: blueviolet;
+    color: #f1f1f1;
+    box-shadow: -2px 0 3px #4489d2,
+                2px 0 3px #7c53b5;
 }
 
 .enterInputs {
     display: flex;
-    border: 1px solid black;
     border-radius: 5px;
+    gap: 10px;
 }
 
 .seperator{

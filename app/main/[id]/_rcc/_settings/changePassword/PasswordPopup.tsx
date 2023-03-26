@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { handleClickOutside } from '@/utils/outsideClick';
 import styles from './password.module.css';
 
 export default function PasswordPopup( { setPasswordPopup, userID }: any){
@@ -11,16 +12,10 @@ export default function PasswordPopup( { setPasswordPopup, userID }: any){
     const [errors, setErrors] = useState(['', '', '']);
 
     useEffect(() => {
-        function handleClickOutside(event: MouseEvent){
-            if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-                setPasswordPopup(false);
-            }
-        }
-        
-        window.addEventListener('mousedown', handleClickOutside)
+        window.addEventListener('mousedown', event => handleClickOutside(event, containerRef, setPasswordPopup))
 
         return () => {
-            window.removeEventListener('mousedown', handleClickOutside);
+            window.removeEventListener('mousedown', () => handleClickOutside);
         }
     }, [])
 
@@ -77,7 +72,7 @@ export default function PasswordPopup( { setPasswordPopup, userID }: any){
 
                 <button
                 onClick={() => updatePassword()}
-                >Change</button>
+                >C H A N G E</button>
             </div>
         </div>
     )

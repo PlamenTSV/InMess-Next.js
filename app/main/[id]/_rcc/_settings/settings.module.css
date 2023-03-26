@@ -42,6 +42,10 @@
     color: white;
 }
 
+.credentials > input[type='file']{
+    display: none;
+}
+
 .pfp {
     position: relative;
 

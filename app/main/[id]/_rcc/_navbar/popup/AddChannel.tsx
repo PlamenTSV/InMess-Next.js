@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react'
 import { Channel, useProvider } from '../../../_context/UserContext';
+import { handleClickOutside } from '@/utils/outsideClick';
 import styles from './popup.module.css'
 
 export default function AddChannel(props: any){
@@ -14,16 +15,10 @@ export default function AddChannel(props: any){
     const reader = new FileReader();
 
     useEffect(() => {
-        function handleClickOutside(event: MouseEvent){
-            if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-                props.setShowPopup(false);
-            }
-        }
-        
-        window.addEventListener('mousedown', handleClickOutside)
+        window.addEventListener('mousedown', event => handleClickOutside(event, containerRef, props.setShowPopup))
 
         return () => {
-            window.removeEventListener('mousedown', handleClickOutside);
+            window.removeEventListener('mousedown', () => handleClickOutside);
         }
     }, [])
 
@@ -50,29 +45,29 @@ export default function AddChannel(props: any){
             <label htmlFor="icon-input"><img src={(channelImage !== '')? channelImage : '/camera.jpg'} alt="channel icon" width={200} height={200}/></label>
 
             <div className={styles.enterInputs}>
-            <input type="text" placeholder='Name of your channel...' ref={channelName}/>
-            <input type="button" value={'Create channel'} 
-            onClick={async () => {
-                const addChannel = await fetch('/api/channel/addChannel', {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        image: base64Image,
-                        name: channelName.current?.value
+                <input type="text" placeholder='Name of your channel...' ref={channelName}/>
+                <input type="button" value={'Create channel'} 
+                onClick={async () => {
+                    const addChannel = await fetch('/api/channel/addChannel', {
+                        method: 'POST',
+                        headers: {
+                            'Content-type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            image: base64Image,
+                            name: channelName.current?.value
+                        })
                     })
-                })
 
-                const { id } = await addChannel.json();
+                    const { id } = await addChannel.json();
 
-                setChannels((old: Channel[]) => [...old, {
-                    id: id,
-                    name: channelName.current?.value,
-                    icon: channelImage
-                }])
-            }}
-            />
+                    setChannels((old: Channel[]) => [...old, {
+                        id: id,
+                        name: channelName.current?.value,
+                        icon: channelImage
+                    }])
+                }}
+                />
             </div>
 
             <div className={styles.seperator}>
