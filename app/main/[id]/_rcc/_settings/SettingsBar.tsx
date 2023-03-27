@@ -7,12 +7,15 @@ import CredentialPopup from './changeCredentials/CredentialPopup';
 
 export default function SettingsBar() {
     const { session } = useProvider();
+    
     const [passwordPopup, setPasswordPopup] = useState(false);
+
     const [credPopup, setCredPopup] = useState(false);
+    const [credential, setCredential] = useState('');
 
     return(
         <>  
-            {credPopup? <CredentialPopup setCredentialPopup={ setCredPopup }/> : ''}
+            {credPopup? <CredentialPopup setCredentialPopup={ setCredPopup } userID={session.id} credential={credential}/> : ''}
             {passwordPopup? <PasswordPopup setPasswordPopup={ setPasswordPopup } userID={session.id}/> : ''}
             <div className={styles.settings}>
                 <h2>Profile</h2>
@@ -36,7 +39,10 @@ export default function SettingsBar() {
                                     <p  className={styles.credName}> { session?.username } </p>
                                 </div>
                                 <img src="/edit-white.svg" alt="edit button" 
-                                    onClick={() => setCredPopup(true)}
+                                    onClick={() => {
+                                        setCredential('username');
+                                        setCredPopup(true)
+                                    }}
                                 />
                             </div>
                             <div className={styles.cred}>
@@ -45,7 +51,10 @@ export default function SettingsBar() {
                                     <p  className={styles.credName}> { session?.email } </p>
                                 </div>
                                 <img src="/edit-white.svg" alt="edit button" 
-                                    onClick={() => setCredPopup(true)}
+                                    onClick={() => {
+                                        setCredential('email');
+                                        setCredPopup(true)
+                                    }}
                                 />
                             </div>
                 </div>
