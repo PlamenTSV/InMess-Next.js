@@ -4,6 +4,7 @@ import { useProvider } from '../../_context/UserContext';
 import styles from './settings.module.css';
 import PasswordPopup from './changePassword/PasswordPopup';
 import CredentialPopup from './changeCredentials/CredentialPopup';
+import PfpChanger from './changeProfileImage/PfpChanger';
 
 export default function SettingsBar() {
     const { session } = useProvider();
@@ -23,40 +24,32 @@ export default function SettingsBar() {
                 <div className={styles.credentials}>
                         <h3>Profile picture:</h3>
 
-                        <input type="file" id="change-icon" accept="image/*"/>
-                            <label htmlFor="change-icon">
-                                <div className={styles.pfp}>
-                                    <img src="/ProfileIcon.png" alt="pfp"/>
-                                    <div>
-                                        <img src="/edit.svg" alt="edit button" className={styles.editIcon}/>
-                                    </div>
-                                </div>
-                            </label>
+                        <PfpChanger/>
 
-                            <div className={styles.cred}>
-                                <div>
-                                    <p>Username:</p>
-                                    <p  className={styles.credName}> { session?.username } </p>
-                                </div>
-                                <img src="/edit-white.svg" alt="edit button" 
-                                    onClick={() => {
-                                        setCredential('username');
-                                        setCredPopup(true)
-                                    }}
-                                />
+                        <div className={styles.cred}>
+                            <div>
+                                <p>Username:</p>
+                                <p  className={styles.credName}> { session?.username } </p>
                             </div>
-                            <div className={styles.cred}>
-                                <div>
-                                    <p>Email:</p>
-                                    <p  className={styles.credName}> { session?.email } </p>
-                                </div>
-                                <img src="/edit-white.svg" alt="edit button" 
-                                    onClick={() => {
-                                        setCredential('email');
-                                        setCredPopup(true)
-                                    }}
-                                />
+                            <img src="/edit-white.svg" alt="edit button" 
+                                onClick={() => {
+                                    setCredential('username');
+                                    setCredPopup(true)
+                                }}
+                            />
+                        </div>
+                        <div className={styles.cred}>
+                            <div>
+                                <p>Email:</p>
+                                <p  className={styles.credName}> { session?.email } </p>
                             </div>
+                            <img src="/edit-white.svg" alt="edit button" 
+                                onClick={() => {
+                                    setCredential('email');
+                                    setCredPopup(true)
+                                }}
+                            />
+                        </div>
                 </div>
 
                 <h3>Password and authentication</h3>

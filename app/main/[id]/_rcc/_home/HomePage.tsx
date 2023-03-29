@@ -8,7 +8,7 @@ export default function HomePage(){
     return (
         <div className={styles.homepage}>
             <div className={styles.header}>
-                <img src='/ProfileIcon.png' alt='pfp' className={styles.pfp}/>
+                <img src={session?.icon ? session.icon : "/ProfileIcon.png"} alt='pfp' className={styles.pfp}/>
                 <div>
                     <h1>Welcome!</h1>
                     <h1>{session?.username}</h1>

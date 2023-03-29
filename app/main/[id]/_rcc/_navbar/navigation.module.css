@@ -26,6 +26,7 @@
 .channel:hover {
     cursor: pointer;
     border-radius: 30%;
+    box-shadow: 0 0 5px #f1f1f1;
 }
 
 @keyframes rotating {
