@@ -1,12 +1,21 @@
+import { useEffect, useState } from 'react';
 import { useProvider } from '../../../_context/UserContext';
 import styles from '../settings.module.css';
 
 export default function PfpChanger(){
     const { session, setSession } = useProvider();
 
+    const [isRequesting, setIsRequesting] = useState<boolean>(false);
+
     const fileReader = new FileReader();
 
+    useEffect(() => {
+        console.log('Requesting: ' + isRequesting);
+    }, [isRequesting])
+
     async function submitIcon(file: string | ArrayBuffer){
+        setIsRequesting(true);
+
         const iconReq = await fetch('/api/account/updatePfp', {
             method: 'PUT',
             headers: {
@@ -17,6 +26,8 @@ export default function PfpChanger(){
                 newImage: file
             })
         })
+
+        setIsRequesting(false);
 
         if(!iconReq.ok){
             console.log('Error');
@@ -41,9 +52,15 @@ export default function PfpChanger(){
             <label htmlFor="change-icon">
                 <div className={styles.pfp}>
                     <img src={session?.icon ? session.icon : "/ProfileIcon.png"} alt="pfp"/>
-                    <div>
+                    <div className={styles.edit}>
                         <img src="/edit.svg" alt="edit button" className={styles.editIcon}/>
                     </div>
+
+                    {isRequesting? 
+                        <div className={styles.loading}>
+                            <img src="/loader.svg" alt="loader" />
+                        </div> 
+                    : ''}
                 </div>
             </label>
         </>

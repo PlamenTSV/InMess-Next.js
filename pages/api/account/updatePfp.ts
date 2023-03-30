@@ -14,9 +14,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     user.icon = clResponse.etag;
     await user.save();
 
-    cloudinary.v2.api.delete_resources_by_prefix(currentIcon, { type: 'upload', resource_type: 'image', folder: 'profile-pictures' })
-    .then(result => console.log(result))
-    .catch(error => console.error(error));
-
+    if((await User.find({icon: currentIcon})).length === 0){
+        cloudinary.v2.uploader.destroy('profile-pictures/' + currentIcon)
+        .then(result => console.log(result))
+        .catch(error => console.error(error));
+    }
+    
     res.status(200).send({message: 'Success', image: cloudinary.v2.url('profile-pictures/' + clResponse.etag)});
 }

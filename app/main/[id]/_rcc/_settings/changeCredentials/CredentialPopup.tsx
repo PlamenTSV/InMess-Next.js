@@ -12,6 +12,7 @@ export default function CredentialPopup({ setCredentialPopup, userID, credential
     const currentPassword = useRef<HTMLInputElement>(null);
 
     const [errors, setErrors] = useState(['', '']);
+    const [isRequesting, setIsRequesting] = useState<Boolean>(false);
 
     useEffect(() => {
         window.addEventListener('mousedown', event => handleClickOutside(event, containerRef, setCredentialPopup));
@@ -28,6 +29,8 @@ export default function CredentialPopup({ setCredentialPopup, userID, credential
             return;
         }
 
+        setIsRequesting(true);
+
         const updateReq = await fetch(`/api/account/update${capitalizeString(credential)}`, {
             method: 'PUT',
             headers: {
@@ -39,6 +42,8 @@ export default function CredentialPopup({ setCredentialPopup, userID, credential
                 password: currentPassword.current?.value
             })
         });
+
+        setIsRequesting(false);
 
         if(!updateReq.ok){
             setErrors(errors.map((e, index) => index === 1 ? `- Wrong password` : ''));
@@ -69,17 +74,19 @@ export default function CredentialPopup({ setCredentialPopup, userID, credential
 
                 <div>
                     <p>New {credential}</p>
-                    <input type="text" name="" id="" ref={newCredential}/>
+                    <input type="text" name="cred" id="cred" ref={newCredential}/>
                 </div>
 
                 <div>
                     <p>Current password</p>
-                    <input type="password" name="" id="" ref={currentPassword}/>
+                    <input type="password" name="pass" id="pass" ref={currentPassword}/>
                 </div>
 
                 <button
                     onClick={() => updateCredential()}
-                >C H A N G E</button>
+                >C H A N G E {isRequesting? <img src='/loader-white.svg' alt='loader' className={styles.loading}/> : ''}</button>
+
+                
             </div>
         </div>
     )

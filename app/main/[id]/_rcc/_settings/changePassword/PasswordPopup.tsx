@@ -9,7 +9,8 @@ export default function PasswordPopup( { setPasswordPopup, userID }: any){
     const newPassword = useRef<HTMLInputElement>(null);
     const confirmNewPassword = useRef<HTMLInputElement>(null);
 
-    const [errors, setErrors] = useState(['', '', '']);
+    const [errors, setErrors] = useState<string[]>(['', '', '']);
+    const [isRequesting, setIsRequesting] = useState<Boolean>(false);
 
     useEffect(() => {
         window.addEventListener('mousedown', event => handleClickOutside(event, containerRef, setPasswordPopup))
@@ -31,6 +32,8 @@ export default function PasswordPopup( { setPasswordPopup, userID }: any){
             return;
         }
 
+        setIsRequesting(true);
+
         const updateReq = await fetch('/api/account/updatePassword', {
             method: 'PUT',
             headers: {
@@ -42,12 +45,14 @@ export default function PasswordPopup( { setPasswordPopup, userID }: any){
                 oldPassword: oldPassword.current?.value
             })
         });
+
+        setIsRequesting(false);
+
         if(!updateReq.ok){
             setErrors(errors.map((err, index) => (index === 0)? '- Wrong password' : ''));
             return;
         }
-        const updateRes = await updateReq.json();
-        console.log(updateRes);
+        
         setPasswordPopup(false);
     }
 
@@ -72,7 +77,7 @@ export default function PasswordPopup( { setPasswordPopup, userID }: any){
 
                 <button
                 onClick={() => updatePassword()}
-                >C H A N G E</button>
+                >C H A N G E {isRequesting? <img src='./loader.svg' alt='loader'/> : ''}</button>
             </div>
         </div>
     )
