@@ -3,10 +3,10 @@ import styles from './chat.module.css';
 import Image from 'next/image';
 import { useProvider } from '../../_context/UserContext';
 
-import { Message } from './Chat';
+import { Messages } from './Chat';
 import { Dispatch, SetStateAction } from 'react';
 
-export default function MessageContainer({ message, setMessages }: {message: Message, setMessages: Dispatch<SetStateAction<Message[]>>}){
+export default function MessageContainer({ message, setMessages }: {message: Messages, setMessages: Dispatch<SetStateAction<Messages[]>>}){
     const {session} = useProvider();
 
     async function deleteMessage(id: string){

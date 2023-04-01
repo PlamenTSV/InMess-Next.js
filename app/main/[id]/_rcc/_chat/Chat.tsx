@@ -5,7 +5,7 @@ import styles from './chat.module.css';
 
 import MessageContainer from './MessageContainer';
 
-export interface Message {
+export interface Messages {
     id: string,
     senderUsername: string,
     senderIcon: string,
@@ -17,7 +17,23 @@ export default function Chat(){
     const { session, activeChannel } = useProvider();
 
     const [inputVal, setInputVal] = useState('');
-    const [messages, setMessages] = useState<Message[]>([]);
+    const [messages, setMessages] = useState<Messages[]>([]);
+
+    useEffect(() => {
+        loadMessages();
+    }, [])
+
+    async function loadMessages(){
+        const messagesReq = await fetch(`/api/messages/load?channel=${activeChannel.id}`);
+        const messagesRes = await messagesReq.json();
+
+        if(!messagesReq.ok){
+            console.log(messagesRes.message);
+            return;
+        }
+
+        setMessages(messagesRes);
+    }
 
     async function sendMessage(message: string){
         const messageReq = await fetch('/api/messages/add', {
@@ -39,7 +55,7 @@ export default function Chat(){
             return;
         }
 
-        console.log(messageRes);
+        //console.log(messageRes);
         setMessages(curr => [...curr, {
             id: messageRes.id,
             senderUsername: messageRes.senderUsername,
