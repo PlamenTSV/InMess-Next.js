@@ -1,22 +1,59 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { useProvider } from '../../_context/UserContext';
 import styles from './chat.module.css';
 
-import Message from './Message';
+import MessageContainer from './MessageContainer';
+
+export interface Message {
+    id: string,
+    senderUsername: string,
+    senderIcon: string,
+    sentAt: Date,
+    content: string
+}
 
 export default function Chat(){
+    const { session, activeChannel } = useProvider();
+
     const [inputVal, setInputVal] = useState('');
-    const [messages, setMessages] = useState<string[]>([]);
+    const [messages, setMessages] = useState<Message[]>([]);
 
-    // useEffect(() => {
+    async function sendMessage(message: string){
+        const messageReq = await fetch('/api/messages/add', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                senderID: session.id,
+                channelID: activeChannel.id,
+                sentAt: new Date(),
+                content: message
+            })
+        })
+        const messageRes = await messageReq.json();
 
-    // })
+        if(!messageReq.ok){
+            console.log(messageRes.message);
+            return;
+        }
+
+        console.log(messageRes);
+        setMessages(curr => [...curr, {
+            id: messageRes.id,
+            senderUsername: messageRes.senderUsername,
+            senderIcon: messageRes.senderIcon,
+            sentAt: messageRes.sentAt,
+            content: message
+        }]);
+    }
 
     return(
         <div className={styles.chat}>
             <div className={styles.chatBox}>
                 {messages.map((message, idx) => {
-                    return <Message key={idx} message={message}/>
+                    return <MessageContainer key={idx} message={message} setMessages={setMessages}/>
                 })}
             </div>
             <div className={styles.inputs}>
@@ -29,7 +66,7 @@ export default function Chat(){
                 onChange={(event) => setInputVal(event.target.value)}
                 onKeyDown={(event) => {
                     if(event.key === 'Enter' && inputVal.trim() !== ''){
-                        setMessages(curr => [...curr, inputVal]);
+                        sendMessage(inputVal);
                         setInputVal('');
                     }
                     if(event.key === 'Delete')setMessages([]);
