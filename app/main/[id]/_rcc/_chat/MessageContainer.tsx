@@ -5,10 +5,10 @@ import { useProvider } from '../../_context/UserContext';
 
 import { Messages } from './Chat';
 import { Dispatch, SetStateAction } from 'react';
+import formatDate from '@/utils/formatDate';
 
 export default function MessageContainer({ message, setMessages }: {message: Messages, setMessages: Dispatch<SetStateAction<Messages[]>>}){
-    const {session} = useProvider();
-
+    
     async function deleteMessage(id: string){
         const deleteReq = await fetch(`/api/messages/delete?messageID=${id}`, {
             method: 'DELETE'
@@ -29,7 +29,8 @@ export default function MessageContainer({ message, setMessages }: {message: Mes
 
             <div className={styles.content}>
                 <div className={styles.messageInfo}>
-                   {message.senderUsername}
+                    <span>{ message.senderUsername } </span>
+                    <span className={styles.date}>{ formatDate(new Date(message.sentAt)) }</span>
                 </div>
                 <p>{message.content}</p>
             </div>

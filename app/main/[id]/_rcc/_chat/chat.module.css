@@ -97,3 +97,8 @@
 .inputs > input::placeholder {
     color: rgb(187, 187, 187);
 }
+
+.date {
+    font-size: 13px;
+    color: rgb(178, 150, 183);
+}
