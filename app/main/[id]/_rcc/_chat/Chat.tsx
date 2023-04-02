@@ -19,11 +19,14 @@ export default function Chat(){
     const [inputVal, setInputVal] = useState('');
     const [messages, setMessages] = useState<Messages[]>([]);
 
+    const [loadingMessages, setLoadingMessages] = useState(false);
+
     useEffect(() => {
         loadMessages();
     }, [])
 
     async function loadMessages(){
+        setLoadingMessages(true);
         const messagesReq = await fetch(`/api/messages/load?channel=${activeChannel.id}`);
         const messagesRes = await messagesReq.json();
 
@@ -33,6 +36,7 @@ export default function Chat(){
         }
 
         setMessages(messagesRes);
+        setLoadingMessages(false);
     }
 
     async function sendMessage(message: string){
@@ -55,7 +59,6 @@ export default function Chat(){
             return;
         }
 
-        //console.log(messageRes);
         setMessages(curr => [...curr, {
             id: messageRes.id,
             senderUsername: messageRes.senderUsername,
@@ -68,10 +71,12 @@ export default function Chat(){
     return(
         <div className={styles.chat}>
             <div className={styles.chatBox}>
-                {messages.map((message, idx) => {
+                {loadingMessages? <div className={styles.loading}><img src="/loader.svg" alt="loader" /></div>  
+                    : messages.map((message, idx) => {
                     return <MessageContainer key={idx} message={message} setMessages={setMessages}/>
                 })}
             </div>
+
             <div className={styles.inputs}>
                 <div style={{width: '50px', height: '50px'}}>
 

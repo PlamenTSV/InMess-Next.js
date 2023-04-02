@@ -6,27 +6,27 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-    await connectMongo();
-    const { channel } = req.query;
+    try {
+      await connectMongo();
+      
+      const { channel } = req.query;
+      const DBmessages = await Message.find({channelID: channel});
+      const messagePromises = DBmessages.map(async mess => {
+        const user = await User.findById(mess.senderID);
+        return {
+          id: mess.id,
+          senderUsername: user.username,
+          senderIcon: cloudinary.v2.url('profile-pictures/' + user.icon),
+          sentAt: mess.sentAt,
+          content: mess.content
+        }
+      });
 
-    try{    
-        const DBmessages = await Message.find({channelID: channel});
-        const messagePromises = DBmessages.map(async mess => {
-            const user = await User.findById(mess.senderID);
-            return {
-                id: mess.id,
-                senderUsername: user.username,
-                senderIcon: cloudinary.v2.url('profile-pictures/' + user.icon),
-                sentAt: mess.sentAt,
-                content: mess.content
-            }
-        })
-        Promise.all(messagePromises).then(results => {
-            res.status(200).send(results);
-        })
-    
+      const results = await Promise.all(messagePromises);
+      res.status(200).send(results);
+
     } catch (error) {
-        console.log(error);
-        res.status(500).send({message: 'Couldn\'t load channels'});
+      console.error(error);
+      res.status(500).send({ message: 'Error loading messages' });
     }
-}
+  }

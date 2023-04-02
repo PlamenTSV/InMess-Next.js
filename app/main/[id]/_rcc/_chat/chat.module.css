@@ -102,3 +102,29 @@
     font-size: 13px;
     color: rgb(178, 150, 183);
 }
+
+.loading {
+    margin: 0 auto;
+
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading > img {
+    width: 100px;
+    aspect-ratio: 1/1;
+
+    animation: rotating 10s linear infinite;
+}
+
+@keyframes rotating {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

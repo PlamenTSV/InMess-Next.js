@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import styles from './navigation.module.css';
@@ -8,17 +8,16 @@ import styles from './navigation.module.css';
 import AddChannel from './popup/AddChannel';
 import { Channel, useProvider } from '../../_context/UserContext';
 
-
-
 export default function NavBar(){
     const {channels, setActiveChannel} = useProvider();
     const [showPopup, setShowPopup] = useState(false);
+    
     const router = useRouter();
-
+    
     function changeChannel(channel: Channel | undefined){
         if(channel){
-            setActiveChannel(channel);
             localStorage.setItem('Active channel', JSON.stringify(channel));
+            setActiveChannel(channel);
             router.push(`/main/${channel.id}`);
         }
         else {
@@ -34,7 +33,7 @@ export default function NavBar(){
             <span></span>
 
             {channels.map((channel: Channel, idx: number) => {
-                return <img src={channel.icon} alt='Channel' key={ idx } className={styles.channel} onClick={() => changeChannel(channel)}/> 
+                return <img src={channel.icon} alt='Channel' key={ idx } className={styles.channel} onClick={() => changeChannel(channel)}/>
             })}
 
             <img src={'/plus.svg'} alt="logo button" className={styles.channel}
