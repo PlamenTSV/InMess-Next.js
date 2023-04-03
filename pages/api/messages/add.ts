@@ -5,8 +5,6 @@ import User from "@/models/User";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-    await connectMongo();
-
     const newMessage = new Message(req.body);
     const user = await User.findById(req.body.senderID);
 

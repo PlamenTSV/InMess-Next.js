@@ -7,8 +7,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-      await connectMongo();
-      
       const { channel } = req.query;
       const DBmessages = await Message.find({channelID: channel});
       const messagePromises = DBmessages.map(async mess => {

@@ -77,7 +77,7 @@ export default function PasswordPopup( { setPasswordPopup, userID }: any){
 
                 <button
                 onClick={() => updatePassword()}
-                >C H A N G E {isRequesting? <img src='./loader.svg' alt='loader'/> : ''}</button>
+                >C H A N G E {isRequesting? <img src='/loader-white.svg' alt='loader' className={styles.loading}/> : ''}</button>
             </div>
         </div>
     )

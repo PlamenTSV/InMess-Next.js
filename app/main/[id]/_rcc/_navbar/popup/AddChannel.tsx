@@ -33,6 +33,28 @@ export default function AddChannel(props: any){
         }
     }
 
+    async function addChannel(){
+        const addChannel = await fetch('/api/channel/addChannel', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                image: base64Image,
+                name: channelName.current?.value
+            })
+        })
+
+        const { id } = await addChannel.json();
+
+        setChannels((old: Channel[]) => [...old, {
+            id: id,
+            name: channelName.current?.value,
+            icon: channelImage
+        }])
+        props.setShowPopup(false);
+    }
+
     return(
     <div className={styles.background}>
         <div className={styles.container} ref={containerRef}>
@@ -47,26 +69,7 @@ export default function AddChannel(props: any){
             <div className={styles.enterInputs}>
                 <input type="text" placeholder='Name of your channel...' ref={channelName}/>
                 <input type="button" value={'Create channel'} 
-                onClick={async () => {
-                    const addChannel = await fetch('/api/channel/addChannel', {
-                        method: 'POST',
-                        headers: {
-                            'Content-type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            image: base64Image,
-                            name: channelName.current?.value
-                        })
-                    })
-
-                    const { id } = await addChannel.json();
-
-                    setChannels((old: Channel[]) => [...old, {
-                        id: id,
-                        name: channelName.current?.value,
-                        icon: channelImage
-                    }])
-                }}
+                onClick={() => addChannel()}
                 />
             </div>
 
