@@ -15,7 +15,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         id: user.id,
         username: user.username,
         email: user.email,
-        icon: cloudinary.v2.url('profile-pictures/' + user.icon)
+        icon: user.icon? cloudinary.v2.url('profile-pictures/' + user.icon) : ''
     }
     
     res.status(200).send(userData);

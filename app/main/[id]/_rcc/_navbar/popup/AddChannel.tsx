@@ -5,10 +5,11 @@ import { handleClickOutside } from '@/utils/outsideClick';
 import styles from './popup.module.css'
 
 export default function AddChannel(props: any){
-    const { setChannels } = useProvider();
+    const { session, setChannels } = useProvider();
 
     const containerRef = useRef<HTMLDivElement>(null);
     const channelName = useRef<HTMLInputElement>(null);
+    const channelCode = useRef<HTMLInputElement>(null);
 
     const [channelImage, setChannelImage] = useState('');
     const [base64Image, setBase64Image] = useState<string | ArrayBuffer>('');
@@ -34,25 +35,57 @@ export default function AddChannel(props: any){
     }
 
     async function addChannel(){
-        const addChannel = await fetch('/api/channel/addChannel', {
+        const addChannel = await fetch('/api/channel/add', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
             },
             body: JSON.stringify({
                 image: base64Image,
-                name: channelName.current?.value
+                name: channelName.current?.value,
+                creator: session.id
             })
         })
 
-        const { id } = await addChannel.json();
+        const newChannel = await addChannel.json();
+
+        if(!addChannel.ok){
+            console.log(newChannel.message);
+            return; 
+        }
 
         setChannels((old: Channel[]) => [...old, {
-            id: id,
+            id: newChannel.id,
             name: channelName.current?.value,
             icon: channelImage
         }])
         props.setShowPopup(false);
+    }
+
+    async function joinChannnel() {
+        const joinReq = await fetch('/api/channel/join', {
+            method: 'PATCH',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                channelID: channelCode.current?.value,
+                userID: session.id
+            })
+        })
+
+        const joinRes = await joinReq.json();
+
+        if(!joinReq.ok){
+            console.log(joinRes.message);
+            return;
+        }
+
+        setChannels((old: Channel[]) => [...old, {
+            id: joinRes.id,
+            name: joinRes.name,
+            icon: joinRes.icon
+        }])
     }
 
     return(
@@ -64,10 +97,16 @@ export default function AddChannel(props: any){
             <input type="file" id="icon-input" accept="image/*"
             onChange={(event) => changeImage(event.target)}
             />
-            <label htmlFor="icon-input"><img src={(channelImage !== '')? channelImage : '/camera.jpg'} alt="channel icon" width={200} height={200}/></label>
+            <label htmlFor="icon-input">
+                <img src={(channelImage !== '')? channelImage : '/camera.jpg'} alt="channel icon" 
+                    width={200} height={200}
+                />
+            </label>
 
             <div className={styles.enterInputs}>
-                <input type="text" placeholder='Name of your channel...' ref={channelName}/>
+                <input type="text" placeholder='Name of your channel...' 
+                    ref={channelName}
+                />
                 <input type="button" value={'Create channel'} 
                 onClick={() => addChannel()}
                 />
@@ -80,8 +119,12 @@ export default function AddChannel(props: any){
             </div>
             <h2>JOIN VIA CODE</h2>
             <div className={styles.enterInputs}>
-                <input type="text" placeholder='Code for channel...'/>
-                <input type="button" value={'Enter channel'}/>
+                <input type="text" placeholder='Code for channel...' 
+                    ref={channelCode}
+                />
+                <input type="button" value={'Enter channel'} 
+                    onClick={() => joinChannnel()}
+                />
             </div>
         </div>
     </div>

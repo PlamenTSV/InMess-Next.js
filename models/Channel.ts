@@ -7,6 +7,14 @@ const channels = new mongoose.Schema({
     },
     icon: {
         type: String
+    },
+    owner: {
+        type: mongoose.SchemaTypes.ObjectId,
+        required: true
+    },
+    members: {
+        type: [mongoose.SchemaTypes.ObjectId],
+        required: true
     }
 })
 

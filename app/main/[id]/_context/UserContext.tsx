@@ -7,6 +7,13 @@ export interface Channel {
     icon: string
 }
 
+interface Session {
+    id: string,
+    username: string,
+    email: string,
+    icon: string
+}
+
 const UserContext = createContext<any>(null);
 
 export function useProvider(){
@@ -17,7 +24,7 @@ export function useProvider(){
 export default function UserProvider({ children }: {children: ReactNode}){
     const [channels, setChannels] = useState<Channel[]>([]);
     const [activeChannel, setActiveChannel] = useState<Channel>();
-    const [session, setSession] = useState();
+    const [session, setSession] = useState<Session>();
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -26,14 +33,19 @@ export default function UserProvider({ children }: {children: ReactNode}){
         }
 
         retrieveSession();
-        retrieveChannels();
-        setIsLoading(false);
     }, [])
+
+    useEffect(() => {
+        if(session)retrieveChannels();
+        setIsLoading(false);
+    }, [session])
+    
 
     const retrieveSession = async () => {
         const sessionReq = await fetch('/api/session');
         if(!sessionReq.ok){
             window.location.href = '/';
+            return;
         }
         const sessionData = await sessionReq.json();
 
@@ -42,8 +54,13 @@ export default function UserProvider({ children }: {children: ReactNode}){
     }
 
     const retrieveChannels = async () => {
-        const channelsReq = await fetch('/api/channel/loadAll');
+        const channelsReq = await fetch(`/api/channel/loadAll?user=${session?.id}`);
         const channelsData = await channelsReq.json();
+
+        if(!channelsReq.ok){
+            console.log(channelsData.message);
+            return;
+        }
 
         console.log(channelsData.channels);
         setChannels(channelsData.channels);
