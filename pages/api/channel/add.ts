@@ -18,7 +18,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         })
         const newChannel = await channel.save();
         
-        res.status(200).send({id: newChannel._id.toString()});
+        res.status(200).send({
+            id: newChannel._id.toString(),
+            name: name,
+            icon: cloudinary.v2.url('channel-banners/' + channelIcon.etag),
+            owner: creator
+        });
     } catch (error) {
         console.log(error);
         res.status(500).send({message: 'Couldn\'t create channel'});
