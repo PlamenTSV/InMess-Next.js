@@ -4,7 +4,8 @@ import { ReactNode, createContext, useContext, useEffect, useState } from "react
 export interface Channel {
     id: string
     name: string,
-    icon: string
+    icon: string,
+    owner: string
 }
 
 interface Session {

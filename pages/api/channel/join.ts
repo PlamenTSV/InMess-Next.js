@@ -13,7 +13,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         res.status(200).send({
             id: channel._id,
             name: channel.name,
-            icon: cloudinary.v2.url('channel-banners/' + channel.icon)
+            icon: cloudinary.v2.url('channel-banners/' + channel.icon),
+            owner: channel.owner
         })
 
     } catch (error) {

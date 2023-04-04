@@ -17,7 +17,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             return {
                 id: channel._id.toString(),
                 name: channel.name,
-                icon: cloudinary.v2.url('channel-banners/' + channel.icon)
+                icon: cloudinary.v2.url('channel-banners/' + channel.icon),
+                owner: channel.owner
             }
         })
     

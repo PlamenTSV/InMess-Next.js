@@ -1,25 +1,44 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useProvider } from '../../_context/UserContext';
-import { usePathname } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import styles from './details.module.css';
+
+import { Channel } from '../../_context/UserContext';
 
 interface ChannelData {
     name: string,
-    icon: string
+    icon: string,
 }
 
 export default function DetailsBar(){
-    const { activeChannel } = useProvider();
+    const { session, activeChannel, setChannels } = useProvider();
     const [data, setData] = useState<ChannelData>();
+
+    const router = useRouter();
     const pathname = usePathname();
 
     useEffect(() => {
         setData({
             name: activeChannel?.name,
-            icon: activeChannel?.icon
+            icon: activeChannel?.icon,
         })
     }, [pathname])
+
+    async function deleteChannel(id: string){
+        const deleteReq = await fetch(`/api/channel/delete?channelID=${id}`, {
+            method: 'DELETE'
+        })
+
+        if(!deleteReq.ok){
+            const error = await deleteReq.json();
+            console.log(error.message);
+            return;
+        }
+
+        setChannels((channels: Channel[]) => channels.filter(ch => ch.id !== id));
+        router.push('main/home');
+    }
 
     return(
         <div className={styles.details}>
@@ -38,6 +57,18 @@ export default function DetailsBar(){
                 <div className={styles.copyTooltip}>
                     Copy code
                 </div>
+
+                {activeChannel?.owner === session?.id ?
+                    <>
+                        <img src="/trash-delete.svg" alt="leave-icon" className={styles.delete}
+                            onClick={() => deleteChannel(activeChannel?.id)}
+                        />
+                        <div className={styles.deleteToolTip}>
+                            Delete channel
+                        </div>
+                    </> 
+                    : ''
+                }
             </div>
         </div>
     )

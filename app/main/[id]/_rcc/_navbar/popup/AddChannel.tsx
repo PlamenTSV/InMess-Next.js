@@ -57,7 +57,8 @@ export default function AddChannel(props: any){
         setChannels((old: Channel[]) => [...old, {
             id: newChannel.id,
             name: channelName.current?.value,
-            icon: channelImage
+            icon: channelImage,
+            owner: session.id
         }])
         props.setShowPopup(false);
     }

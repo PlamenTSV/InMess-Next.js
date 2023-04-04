@@ -30,9 +30,10 @@
 
 .controls {
     margin-top: auto;
-    align-self: flex-start;
-    margin-left: 10px;
+    align-self: center;
     margin-bottom: 5px;
+
+    width: 90%;
 
     display: flex;
     gap: 5px;
@@ -69,7 +70,7 @@
     display: none;
 }
 
-.leave:hover~.leaveTooltip {
+.leave:hover ~ .leaveTooltip {
     display: block;
 }
 
@@ -88,6 +89,44 @@
     display: none;
 }
 
-.copy:hover~.copyTooltip {
+.copy:hover ~ .copyTooltip {
+    display: block;
+}
+
+.delete {
+    width: 25px;
+    aspect-ratio: 1/1;
+    padding: 5px;
+
+    border: 2px solid #FF0055;
+    border-radius: 10px;
+
+    margin-left: auto;
+
+    transition: 0.2s;
+}
+
+.delete:hover {
+    cursor: pointer;
+    background-color: #ec8dad;
+}
+
+.deleteToolTip {
+    position: absolute;
+    bottom: 50px;
+    right: 10px;
+
+    background-color: rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+    padding: 3px;
+
+    border-radius: 5px;
+    border: 1px solid #FF0055;
+    color: #FF0055;
+
+    display: none;
+}
+
+.delete:hover ~ .deleteToolTip{
     display: block;
 }
