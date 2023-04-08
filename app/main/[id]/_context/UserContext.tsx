@@ -1,19 +1,6 @@
 'use client';
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
-
-export interface Channel {
-    id: string
-    name: string,
-    icon: string,
-    owner: string
-}
-
-interface Session {
-    id: string,
-    username: string,
-    email: string,
-    icon: string
-}
+import { Channel, Session } from '@/utils/interfaces';
 
 const UserContext = createContext<any>(null);
 

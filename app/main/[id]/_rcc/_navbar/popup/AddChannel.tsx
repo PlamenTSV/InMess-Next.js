@@ -1,7 +1,8 @@
 'use client';
 import { useEffect, useRef, useState } from 'react'
-import { Channel, useProvider } from '../../../_context/UserContext';
+import { useProvider } from '../../../_context/UserContext';
 import { handleClickOutside } from '@/utils/outsideClick';
+import { Channel } from '@/utils/interfaces'; 
 import styles from './popup.module.css'
 
 export default function AddChannel(props: any){

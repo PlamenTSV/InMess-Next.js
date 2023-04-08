@@ -20,7 +20,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       if(bcrypt.compareSync(password, user.password)){
         loginSuccessful = true;
 
-        const sessionToken = jwt.sign({id: user.id}, process.env.SESSION_SECRET, { expiresIn: '1d' });
+        const sessionToken = jwt.sign({id: user.id}, process.env.NEXT_PUBLIC_SESSION_SECRET, { expiresIn: '1d' });
 
         res.setHeader('Set-Cookie', serialize('sessionToken', sessionToken, {
           httpOnly: true,

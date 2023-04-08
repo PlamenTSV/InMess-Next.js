@@ -27,7 +27,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         try{
             const newRegister = await user.save();
 
-            const sessionToken = jwt.sign({id: newRegister.id}, process.env.SESSION_SECRET, { expiresIn: '1d' });
+            const sessionToken = jwt.sign({id: newRegister.id}, process.env.NEXT_PUBLIC_SESSION_SECRET, { expiresIn: '1d' });
 
             res.setHeader('Set-Cookie', serialize('sessionToken', sessionToken, {
                 httpOnly: true,

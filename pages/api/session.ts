@@ -7,7 +7,7 @@ import connectMongo from "@/database/connection";
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     await connectMongo();
 
-    const decoded = jwt.verify(req.cookies.sessionToken!, process.env.SESSION_SECRET as Secret) as JwtPayload;
+    const decoded = jwt.verify(req.cookies.sessionToken!, process.env.NEXT_PUBLIC_SESSION_SECRET as Secret) as JwtPayload;
 
     const user = await User.findById(decoded.id);
     

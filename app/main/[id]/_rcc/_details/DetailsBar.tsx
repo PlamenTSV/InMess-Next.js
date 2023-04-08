@@ -4,16 +4,11 @@ import { useProvider } from '../../_context/UserContext';
 import { useRouter, usePathname } from 'next/navigation';
 import styles from './details.module.css';
 
-import { Channel } from '../../_context/UserContext';
-
-interface ChannelData {
-    name: string,
-    icon: string,
-}
+import { Channel, ActiveChannel } from '@/utils/interfaces';
 
 export default function DetailsBar(){
     const { session, activeChannel, setChannels } = useProvider();
-    const [data, setData] = useState<ChannelData>();
+    const [data, setData] = useState<ActiveChannel>();
 
     const router = useRouter();
     const pathname = usePathname();

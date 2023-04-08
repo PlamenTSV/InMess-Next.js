@@ -1,8 +1,10 @@
+import { NextApiRequest, NextApiResponse } from "next";
+
 import cloudinary from "@/database/cloudinary";
-import connectMongo from "@/database/connection";
+
 import Message from "@/models/Message";
 import User from "@/models/User";
-import { NextApiRequest, NextApiResponse } from "next";
+import pusherServer from "@/utils/pusherServer";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     const newMessage = new Message(req.body);
@@ -10,6 +12,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     try {
         await newMessage.save();
+
+        pusherServer.trigger('channel-' + newMessage.channelID, 'message', 'az');
 
         res.status(200).send({
             id: newMessage.id,

@@ -1,27 +1,27 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { useProvider } from '../../_context/UserContext';
+
 import styles from './chat.module.css';
 
+import { useProvider } from '../../_context/UserContext';
 import MessageContainer from './MessageContainer';
-
-export interface Messages {
-    id: string,
-    senderUsername: string,
-    senderIcon: string,
-    sentAt: Date,
-    content: string
-}
+import { Message } from '@/utils/interfaces';
+import pusher from '@/utils/pusherClient';
 
 export default function Chat(){
     const { session, activeChannel } = useProvider();
 
     const [inputVal, setInputVal] = useState('');
-    const [messages, setMessages] = useState<Messages[]>([]);
+    const [messages, setMessages] = useState<Message[]>([]);
 
     const [loadingMessages, setLoadingMessages] = useState(false);
 
     useEffect(() => {
+        const channel = pusher.subscribe('channel-' + activeChannel.id);
+        channel.bind('message', (data: String) => {
+            console.log(data);
+        })
+
         loadMessages();
     }, [])
 

@@ -6,7 +6,8 @@ import { useRouter } from 'next/navigation';
 import styles from './navigation.module.css';
 
 import AddChannel from './popup/AddChannel';
-import { Channel, useProvider } from '../../_context/UserContext';
+import { useProvider } from '../../_context/UserContext';
+import { Channel } from '@/utils/interfaces';
 
 export default function NavBar(){
     const {channels, setActiveChannel} = useProvider();

@@ -1,13 +1,12 @@
 import styles from './chat.module.css';
 
 import Image from 'next/image';
-import { useProvider } from '../../_context/UserContext';
 
-import { Messages } from './Chat';
 import { Dispatch, SetStateAction } from 'react';
 import formatDate from '@/utils/formatDate';
+import { Message } from '@/utils/interfaces';
 
-export default function MessageContainer({ message, setMessages }: {message: Messages, setMessages: Dispatch<SetStateAction<Messages[]>>}){
+export default function MessageContainer({ message, setMessages }: {message: Message, setMessages: Dispatch<SetStateAction<Message[]>>}){
     
     async function deleteMessage(id: string){
         const deleteReq = await fetch(`/api/messages/delete?messageID=${id}`, {
