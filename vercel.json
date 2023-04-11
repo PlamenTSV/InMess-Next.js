@@ -1,9 +1,7 @@
 {
-    "routes": [
-      {
-        "src": "/api/login",
-        "methods": ["GET", "POST"],
-        "timeout": 300
-      }
-    ]
+    "functions": {
+        "api/login": {
+            "maxDuration": 10
+        }
+    }
   }
