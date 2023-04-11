@@ -21,7 +21,7 @@
     "jose": "^4.12.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.9.2",
-    "next": "13.1.6",
+    "next": "^13.1.6",
     "next-cookies": "^2.0.3",
     "pusher": "^5.1.2",
     "pusher-js": "^8.0.2",
