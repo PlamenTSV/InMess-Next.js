@@ -18,11 +18,15 @@ export default function Chat(){
 
     useEffect(() => {
         const channel = pusher.subscribe('channel-' + activeChannel.id);
-        channel.bind('message', (data: String) => {
-            console.log(data);
+        channel.bind('message', (data: Message) => {
+            setMessages(curr => [...curr, data]);
         })
 
         loadMessages();
+
+        return () => {
+            channel.disconnect();
+        }
     }, [])
 
     async function loadMessages(){
@@ -34,7 +38,7 @@ export default function Chat(){
             console.log(messagesRes.message);
             return;
         }
-
+        
         setMessages(messagesRes);
         setLoadingMessages(false);
     }
@@ -58,14 +62,6 @@ export default function Chat(){
             console.log(messageRes.message);
             return;
         }
-
-        setMessages(curr => [...curr, {
-            id: messageRes.id,
-            senderUsername: messageRes.senderUsername,
-            senderIcon: messageRes.senderIcon,
-            sentAt: messageRes.sentAt,
-            content: message
-        }]);
     }
 
     return(
