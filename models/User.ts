@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const users = new mongoose.Schema({
     username: {
         type: String,
-        required: true
+        required: true,
+        index: true
     },
     email: {
         type: String,
