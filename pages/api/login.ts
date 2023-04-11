@@ -8,34 +8,34 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  return new Promise<void>(async resolve => {
     await connectMongo();
-    
-    let loginSuccessful = false;
-    const {username, password} = req.body;
   
-    const users = await User.find({username: username});
-    
-    users.forEach(user => {
-      if(bcrypt.compareSync(password, user.password)){
-        loginSuccessful = true;
+    const {username, password} = req.body;
 
-        const sessionToken = jwt.sign({id: user.id}, process.env.NEXT_PUBLIC_SESSION_SECRET, { expiresIn: '1d' });
-
-        res.setHeader('Set-Cookie', serialize('sessionToken', sessionToken, {
-          httpOnly: true,
-          secure: true,
-          sameSite: 'strict', 
-          maxAge: 60 * 60  * 24,
-          path: '/'
-        }));
-        
-      }
-    })
+    try {
+      const users = await User.find({username: username});
     
-    res.status(loginSuccessful? 200 : 401).send(loginSuccessful? {message: 'Successful login!'} : {message: 'No such user! Please check your credentials'});
-    resolve();
-  })
+      users.forEach(user => {
+        if(bcrypt.compareSync(password, user.password)){
+    
+          const sessionToken = jwt.sign({id: user.id}, process.env.NEXT_PUBLIC_SESSION_SECRET, { expiresIn: '1d' });
+
+          res.setHeader('Set-Cookie', serialize('sessionToken', sessionToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'strict', 
+            maxAge: 60 * 60  * 24,
+            path: '/'
+          }));
+          
+        }
+      })
+      
+      res.status(200).send({message: 'Successful login!'});
+    } catch (error) {
+      console.log(error);
+      res.status(400).send({message: 'No such user found!'});
+    }
 }
 
 
