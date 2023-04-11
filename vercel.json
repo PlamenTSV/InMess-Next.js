@@ -1,6 +1,6 @@
 {
     "functions": {
-        "api/login.ts": {
+        "/api/login.ts": {
             "maxDuration": 10
         }
     }
