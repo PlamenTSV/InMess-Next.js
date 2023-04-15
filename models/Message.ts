@@ -5,6 +5,14 @@ const messages = new mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,
         required: true
     },
+    senderUsername: {
+        type: String,
+        required: true
+    },
+    senderIcon: {
+        type: String,
+        required: true
+    },
     channelID: {
         type: mongoose.SchemaTypes.ObjectId,
         required: true

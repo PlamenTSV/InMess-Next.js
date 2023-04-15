@@ -51,6 +51,8 @@ export default function Chat(){
             },
             body: JSON.stringify({
                 senderID: session.id,
+                senderUsername: session.username,
+                senderIcon: session.icon,
                 channelID: activeChannel.id,
                 sentAt: new Date(),
                 content: message

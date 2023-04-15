@@ -3,20 +3,19 @@ import { NextApiRequest, NextApiResponse } from "next";
 import cloudinary from "@/database/cloudinary";
 
 import Message from "@/models/Message";
-import User from "@/models/User";
 import pusherServer from "@/utils/pusherServer";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     const newMessage = new Message(req.body);
-    const user = await User.findById(req.body.senderID);
+    console.log(newMessage.icon);
 
     try {
         await newMessage.save();
 
         await pusherServer.trigger('channel-' + newMessage.channelID, 'message', {
             id: newMessage.id,
-            senderUsername: user.username,
-            senderIcon: cloudinary.v2.url('profile-pictures/' + user.icon),
+            senderUsername: newMessage.senderUsername,
+            senderIcon: newMessage.senderIcon,
             sentAt: req.body.sentAt,
             content: newMessage.content
         });
