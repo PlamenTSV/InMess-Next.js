@@ -1,13 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import cloudinary from "@/database/cloudinary";
-
 import Message from "@/models/Message";
 import pusherServer from "@/utils/pusherServer";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     const newMessage = new Message(req.body);
-    console.log(newMessage.icon);
 
     try {
         await newMessage.save();

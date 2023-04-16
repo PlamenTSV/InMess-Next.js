@@ -18,6 +18,16 @@ export default function Chat(){
 
     useEffect(() => {
         const channel = pusher.subscribe('channel-' + activeChannel.id);
+        
+        channel.bind('pusher:subscription_succeeded', () => {
+            console.log('joined');
+            channel.trigger('client-member-joined', {data: 'test'});
+        });
+        
+        channel.bind('client-member-joined', (data: any) => {
+            console.log(data);
+        })
+
         channel.bind('message', (data: Message) => {
             setMessages(curr => [...curr, data]);
         })
@@ -25,6 +35,8 @@ export default function Chat(){
         loadMessages();
 
         return () => {
+            channel.unbind_all();
+            channel.unsubscribe();
             channel.disconnect();
         }
     }, [])

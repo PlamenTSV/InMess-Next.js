@@ -14,7 +14,6 @@ export default function DetailsBar(){
     const pathname = usePathname();
 
     useEffect(() => {
-        console.log(activeChannel);
         setData({
             name: activeChannel?.name,
             icon: activeChannel?.icon,
