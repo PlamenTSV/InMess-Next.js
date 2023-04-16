@@ -9,18 +9,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const { channel } = req.query;
       const DBmessages = await Message.find({channelID: channel});
 
-      // const messagePromises = DBmessages.map(async mess => {
-      //   const user = await User.findById(mess.senderID);
-      //   return {
-      //     id: mess.id,
-      //     senderUsername: user.username,
-      //     senderIcon: cloudinary.v2.url('profile-pictures/' + user.icon),
-      //     sentAt: mess.sentAt,
-      //     content: mess.content
-      //   }
-      // });
-
-      // const results = await Promise.all(messagePromises);
       res.status(200).send(DBmessages);
 
     } catch (error) {

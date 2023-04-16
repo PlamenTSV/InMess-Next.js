@@ -7,7 +7,7 @@ import { useProvider } from '../../_context/UserContext';
 import MessageContainer from './MessageContainer';
 import { Message } from '@/utils/interfaces';
 import pusherClient from '@/utils/pusherClient';
-import pusherServer from '@/utils/pusherServer';
+import pushNewMember from '@/utils/pushNewMember';
 
 export default function Chat(){
     const { session, activeChannel } = useProvider();
@@ -22,7 +22,7 @@ export default function Chat(){
         
         channel.bind('pusher:subscription_succeeded', () => {
             console.log('joined');
-            pusherServer.trigger('channel-' + activeChannel.id, 'client-member-joined', {data: 'test'});
+            pushNewMember('channel-' + activeChannel.id, 'client-member-joined', {data: 'test'});
         });
         
         channel.bind('client-member-joined', (data: any) => {
