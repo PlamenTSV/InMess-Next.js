@@ -6,7 +6,8 @@ import styles from './chat.module.css';
 import { useProvider } from '../../_context/UserContext';
 import MessageContainer from './MessageContainer';
 import { Message } from '@/utils/interfaces';
-import pusher from '@/utils/pusherClient';
+import pusherClient from '@/utils/pusherClient';
+import pusherServer from '@/utils/pusherServer';
 
 export default function Chat(){
     const { session, activeChannel } = useProvider();
@@ -17,11 +18,11 @@ export default function Chat(){
     const [loadingMessages, setLoadingMessages] = useState(false);
 
     useEffect(() => {
-        const channel = pusher.subscribe('channel-' + activeChannel.id);
+        const channel = pusherClient.subscribe('channel-' + activeChannel.id);
         
         channel.bind('pusher:subscription_succeeded', () => {
             console.log('joined');
-            channel.trigger('client-member-joined', {data: 'test'});
+            pusherServer.trigger('channel-' + activeChannel.id, 'client-member-joined', {data: 'test'});
         });
         
         channel.bind('client-member-joined', (data: any) => {
