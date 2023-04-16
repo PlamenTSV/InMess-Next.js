@@ -4,7 +4,8 @@ const pusherServer = new Pusher({
     appId: process.env.NEXT_PUBLIC_PUSHER_APPID!,
     key: process.env.NEXT_PUBLIC_PUSHER_KEY!,
     cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
-    secret: process.env.NEXT_PUBLIC_PUSHER_SECRET!
+    secret: process.env.NEXT_PUBLIC_PUSHER_SECRET!,
+    encrypted: true
 });
 
 export default pusherServer;
