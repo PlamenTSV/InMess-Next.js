@@ -100,6 +100,7 @@ export default function Chat(){
                     if(event.key === 'Enter' && inputVal.trim() !== ''){
                         sendMessage(inputVal);
                         setInputVal('');
+                        
                     }
                     if(event.key === 'Delete')setMessages([]);
                 }}
