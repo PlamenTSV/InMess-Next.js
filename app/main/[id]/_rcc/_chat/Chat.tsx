@@ -17,7 +17,7 @@ export default function Chat(){
     const [loadingMessages, setLoadingMessages] = useState(false);
 
     useEffect(() => {
-        const channel = pusherClient.subscribe('channel-' + activeChannel.id);
+        const channel = pusherClient.subscribe('private-' + activeChannel.id);
         
         channel.bind('pusher:subscription_succeeded', () => {
             console.log(`Subscribed to channel ${activeChannel.id}`);
@@ -30,6 +30,7 @@ export default function Chat(){
 
         channel.bind('message', (data: Message) => {
             setMessages(curr => [...curr, data]);
+            console.log(data);
         })
 
         loadMessages();

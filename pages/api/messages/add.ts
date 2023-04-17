@@ -9,7 +9,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         await newMessage.save();
 
-        await pusherServer.trigger('channel-' + newMessage.channelID, 'message', {
+        await pusherServer.trigger('private-' + newMessage.channelID, 'message', {
             id: newMessage.id,
             senderUsername: newMessage.senderUsername,
             senderIcon: newMessage.senderIcon,
