@@ -1,18 +1,33 @@
 'use client';
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { Channel, Session } from '@/utils/interfaces';
+import { ActiveMember } from "@/utils/interfaces/ActiveMember";
+import { IContext } from "@/utils/interfaces/Context";
 
-const UserContext = createContext<any>(null);
+const UserContext = createContext<IContext>({
+    channels: [],
+    setChannels: () => {},
+    session: undefined,
+    setSession: () => {},
+    activeChannel: undefined,
+    setActiveChannel: () => {},
+    activeMembers: [],
+    setActiveMembers: () => {}
+});
 
 export function useProvider(){
     const context = useContext(UserContext);
-    if(context) return context;
+    return context;
 }
 
 export default function UserProvider({ children }: {children: ReactNode}){
     const [channels, setChannels] = useState<Channel[]>([]);
+
     const [activeChannel, setActiveChannel] = useState<Channel>();
+    const [activeMembers, setActiveMembers] = useState<ActiveMember[]>([]);
+
     const [session, setSession] = useState<Session>();
+
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -54,7 +69,7 @@ export default function UserProvider({ children }: {children: ReactNode}){
         setChannels(channelsData.channels);
     }
 
-    const values = {channels, setChannels, session, setSession, activeChannel, setActiveChannel};
+    const values: IContext = {channels, setChannels, session, setSession, activeChannel, setActiveChannel, activeMembers, setActiveMembers};
 
     return isLoading? <h1>Loading...</h1> :  (
         <UserContext.Provider value={values}>

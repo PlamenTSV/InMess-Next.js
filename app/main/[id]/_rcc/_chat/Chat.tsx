@@ -17,10 +17,10 @@ export default function Chat(){
     const [loadingMessages, setLoadingMessages] = useState(false);
 
     useEffect(() => {
-        const channel = pusherClient.subscribe('private-' + activeChannel.id);
+        const channel = pusherClient.subscribe('private-' + activeChannel?.id);
         
         channel.bind('pusher:subscription_succeeded', () => {
-            console.log(`Subscribed to channel ${activeChannel.id}`);
+            console.log(`Subscribed to channel ${activeChannel?.id}`);
             channel.trigger('client-member-joined', 'hello');
         });
         
@@ -44,7 +44,7 @@ export default function Chat(){
 
     async function loadMessages(){
         setLoadingMessages(true);
-        const messagesReq = await fetch(`/api/messages/load?channel=${activeChannel.id}`);
+        const messagesReq = await fetch(`/api/messages/load?channel=${activeChannel?.id}`);
         const messagesRes = await messagesReq.json();
 
         if(!messagesReq.ok){
@@ -63,10 +63,10 @@ export default function Chat(){
                 'Content-type': 'application/json'
             },
             body: JSON.stringify({
-                senderID: session.id,
-                senderUsername: session.username,
-                senderIcon: session.icon,
-                channelID: activeChannel.id,
+                senderID: session?.id,
+                senderUsername: session?.username,
+                senderIcon: session?.icon,
+                channelID: activeChannel?.id,
                 sentAt: new Date(),
                 content: message
             })
@@ -100,7 +100,6 @@ export default function Chat(){
                     if(event.key === 'Enter' && inputVal.trim() !== ''){
                         sendMessage(inputVal);
                         setInputVal('');
-                        
                     }
                     if(event.key === 'Delete')setMessages([]);
                 }}

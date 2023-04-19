@@ -4,4 +4,34 @@
     flex-grow: 1;
     
     background-color: rgba(0, 0, 0, 0.3);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.member {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 85%;
+    max-width: 85%;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.member > div {
+    width: 50px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background-color: aqua;
+}
+
+.member > p {
+    padding: 0;
+    color: wheat;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
