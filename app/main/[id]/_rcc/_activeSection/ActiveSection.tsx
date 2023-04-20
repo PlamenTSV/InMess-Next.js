@@ -1,30 +1,18 @@
 'use client';
 import { ActiveMember } from '@/utils/interfaces/ActiveMember';
-import { useEffect } from 'react';
 import { useProvider } from '../../_context/UserContext';
 import styles from './active.module.css';
 
 export default function ActiveSection(){
     const { activeMembers, setActiveMembers } = useProvider();
 
-    useEffect(() => {
-        setActiveMembers([{
-            id: '123',
-            memberUsername: 'ADADADADADAaaaaa',
-            memberIcon: 'az'
-        },
-        {
-            id: '123',
-            memberUsername: 'bbbbbbbbbbbbbb',
-            memberIcon: 'az'
-        }])
-    }, [])
-
     return (
         <div className={styles.activeSection}>
-            {activeMembers.map((member: ActiveMember) => 
+            <h2>Currently active</h2>
+            {activeMembers?.filter((member: ActiveMember) => member.id !== undefined)
+                .map((member: ActiveMember) => 
                 <div className={styles.member}>
-                    <div>{member.memberIcon}</div>
+                    <img src={member.memberIcon} alt="profile icon of current member" />
                     <p>{member.memberUsername}</p>
                 </div> 
             )}

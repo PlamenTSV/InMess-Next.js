@@ -6,10 +6,12 @@ import styles from './chat.module.css';
 import { useProvider } from '../../_context/UserContext';
 import MessageContainer from './MessageContainer';
 import { Message } from '@/utils/interfaces';
+import { ActiveMember } from '@/utils/interfaces/ActiveMember';
+
 import pusherClient from '@/utils/pusherClient';
 
 export default function Chat(){
-    const { session, activeChannel } = useProvider();
+    const { session, activeChannel, activeMembers, setActiveMembers } = useProvider();
 
     const [inputVal, setInputVal] = useState('');
     const [messages, setMessages] = useState<Message[]>([]);
@@ -21,11 +23,19 @@ export default function Chat(){
         
         channel.bind('pusher:subscription_succeeded', () => {
             console.log(`Subscribed to channel ${activeChannel?.id}`);
-            channel.trigger('client-member-joined', 'hello');
+
+            const newMember = {
+                id: session?.id!,
+                memberUsername: session?.username!,
+                memberIcon: session?.icon!
+            }
+
+            channel.trigger('client-member-joined', newMember);
         });
         
-        channel.bind('client-member-joined', (data: any) => {
+        channel.bind('client-member-joined', (data: ActiveMember) => {
             console.log(data);
+            setActiveMembers([...activeMembers, data]);
         })
 
         channel.bind('message', (data: Message) => {

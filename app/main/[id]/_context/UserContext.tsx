@@ -22,11 +22,10 @@ export function useProvider(){
 
 export default function UserProvider({ children }: {children: ReactNode}){
     const [channels, setChannels] = useState<Channel[]>([]);
+    const [session, setSession] = useState<Session>();
 
     const [activeChannel, setActiveChannel] = useState<Channel>();
     const [activeMembers, setActiveMembers] = useState<ActiveMember[]>([]);
-
-    const [session, setSession] = useState<Session>();
 
     const [isLoading, setIsLoading] = useState(true);
 
@@ -40,6 +39,11 @@ export default function UserProvider({ children }: {children: ReactNode}){
 
     useEffect(() => {
         if(session)retrieveChannels();
+        setActiveMembers([{
+            id: session?.id!,
+            memberUsername: session?.username!,
+            memberIcon: session?.icon!
+        }]);
         setIsLoading(false);
     }, [session])
     
