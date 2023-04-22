@@ -10,8 +10,8 @@ export default function ActiveSection(){
         <div className={styles.activeSection}>
             <h2>Currently active</h2>
             {activeMembers?.filter((member: ActiveMember) => member.id !== undefined)
-                .map((member: ActiveMember) => 
-                <div className={styles.member}>
+                .map((member: ActiveMember, idx: number) => 
+                <div className={styles.member} key={idx}>
                     <img src={member.memberIcon} alt="profile icon of current member" />
                     <p>{member.memberUsername}</p>
                 </div> 

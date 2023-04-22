@@ -4,10 +4,10 @@ import { useProvider } from '../../_context/UserContext';
 import { useRouter, usePathname } from 'next/navigation';
 import styles from './details.module.css';
 
-import { Channel, ActiveChannel } from '@/utils/interfaces';
+import { ActiveChannel } from '@/utils/interfaces';
 
 export default function DetailsBar(){
-    const { session, activeChannel, setChannels } = useProvider();
+    const { session, activeChannel, channels, setChannels } = useProvider();
     const [data, setData] = useState<ActiveChannel>();
 
     const router = useRouter();
@@ -15,18 +15,18 @@ export default function DetailsBar(){
 
     useEffect(() => {
         setData({
-            name: activeChannel?.name,
-            icon: activeChannel?.icon,
+            name: activeChannel?.name!,
+            icon: activeChannel?.icon!,
         })
     }, [pathname])
 
     async function removeChannel(id: string, deleting: boolean){
         const deleteReq = deleting ? 
-            await fetch(`/api/channel/delete?channelID=${id}&userID=${session.id}`, {
+            await fetch(`/api/channel/delete?channelID=${id}&userID=${session?.id}`, {
                 method: 'DELETE'
             })
         :
-            await fetch(`/api/channel/leave?channelID=${id}&userID=${session.id}`, {
+            await fetch(`/api/channel/leave?channelID=${id}&userID=${session?.id}`, {
                 method: 'PATCH'
             });
 
@@ -37,7 +37,7 @@ export default function DetailsBar(){
             return;
         }
 
-        setChannels((channels: Channel[]) => channels.filter(ch => ch.id !== id));
+        setChannels(channels.filter(ch => ch.id !== id));
         router.push('main/home');
     }
 
@@ -50,7 +50,7 @@ export default function DetailsBar(){
                 {activeChannel?.owner === session?.id ?
                     <>
                         <img src="/trash-delete.svg" alt="leave-icon" className={styles.delete}
-                            onClick={() => removeChannel(activeChannel?.id, true)}
+                            onClick={() => removeChannel(activeChannel?.id!, true)}
                         />
                         <div className={styles.deleteToolTip}>
                             Delete channel
@@ -59,7 +59,7 @@ export default function DetailsBar(){
                     :
                     <>
                         <img src="/leave.svg" alt="leave-icon" className={styles.leave} 
-                            onClick={() => removeChannel(activeChannel?.id, false)}
+                            onClick={() => removeChannel(activeChannel?.id!, false)}
                         />
                         <div className={styles.leaveTooltip}>
                             Leave
@@ -68,7 +68,7 @@ export default function DetailsBar(){
                 }
 
                 <img src="/copy.svg" alt="leave-icon" className={styles.copy}
-                onClick={() => navigator.clipboard.writeText(activeChannel?.id)}
+                onClick={() => navigator.clipboard.writeText(activeChannel?.id!)}
                 />
                 <div className={styles.copyTooltip}>
                     Copy code
