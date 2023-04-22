@@ -2,11 +2,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { useProvider } from '../../../_context/UserContext';
 import { handleClickOutside } from '@/utils/outsideClick';
-import { Channel } from '@/utils/interfaces'; 
 import styles from './popup.module.css'
 
 export default function AddChannel(props: any){
-    const { session, setChannels } = useProvider();
+    const { session, channels, setChannels } = useProvider();
 
     const containerRef = useRef<HTMLDivElement>(null);
     const channelName = useRef<HTMLInputElement>(null);
@@ -48,7 +47,7 @@ export default function AddChannel(props: any){
             body: JSON.stringify({
                 image: base64Image,
                 name: channelName.current?.value,
-                creator: session.id
+                creator: session?.id
             })
         })
 
@@ -59,7 +58,7 @@ export default function AddChannel(props: any){
             return; 
         }
 
-        setChannels((old: Channel[]) => [...old, {
+        setChannels([...channels, {
             id: newChannel.id,
             name: newChannel.name,
             icon: newChannel.icon,
@@ -80,7 +79,7 @@ export default function AddChannel(props: any){
             },
             body: JSON.stringify({
                 channelID: channelCode.current?.value,
-                userID: session.id
+                userID: session?.id
             })
         })
 
@@ -91,10 +90,11 @@ export default function AddChannel(props: any){
             return;
         }
 
-        setChannels((old: Channel[]) => [...old, {
+        setChannels([...channels, {
             id: joinRes.id,
             name: joinRes.name,
-            icon: joinRes.icon
+            icon: joinRes.icon,
+            owner: joinRes.owner
         }])
 
         setIsRequesting(false);
