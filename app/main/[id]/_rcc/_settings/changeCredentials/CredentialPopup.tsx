@@ -56,12 +56,12 @@ export default function CredentialPopup({ setCredentialPopup, userID, credential
 
         credential === 'username' ? 
             setSession({
-                ...session,
+                ...session!,
                 username: newCredential.current.value
             })
             :
             setSession({
-                ...session,
+                ...session!,
                 email: newCredential.current.value
             })
     }

@@ -16,8 +16,8 @@ export default function SettingsBar() {
 
     return(
         <>  
-            {credPopup? <CredentialPopup setCredentialPopup={ setCredPopup } userID={session.id} credential={credential}/> : ''}
-            {passwordPopup? <PasswordPopup setPasswordPopup={ setPasswordPopup } userID={session.id}/> : ''}
+            {credPopup? <CredentialPopup setCredentialPopup={ setCredPopup } userID={session?.id} credential={credential}/> : ''}
+            {passwordPopup? <PasswordPopup setPasswordPopup={ setPasswordPopup } userID={session?.id}/> : ''}
             <div className={styles.settings}>
                 <h2>Profile</h2>
 

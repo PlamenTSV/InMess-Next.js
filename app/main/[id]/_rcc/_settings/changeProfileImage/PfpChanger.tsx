@@ -22,7 +22,7 @@ export default function PfpChanger(){
                 'Content-type': 'application/json'
             },
             body: JSON.stringify({
-                userID: session.id,
+                userID: session?.id,
                 newImage: file
             })
         })
@@ -33,7 +33,7 @@ export default function PfpChanger(){
             console.log('Error');
         }
         const iconRes = await iconReq.json();
-        setSession({...session, icon: iconRes.image})
+        setSession({...session!, icon: iconRes.image})
         console.log(iconRes);
     }
 
