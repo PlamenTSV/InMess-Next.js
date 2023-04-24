@@ -19,6 +19,7 @@ export default function Chat(){
     const [loadingMessages, setLoadingMessages] = useState(false);
 
     useEffect(() => {
+        console.log(`Currently active: ${activeMembers}`);
         const channel = pusherClient.subscribe('private-' + activeChannel?.id);
         
         channel.bind('pusher:subscription_succeeded', () => {
@@ -41,9 +42,7 @@ export default function Chat(){
         channel.bind('client-member-left', (data: ActiveMember) => {
             console.log('User with id ' + data.id + ' left')
             console.log(activeMembers);
-            setActiveMembers(activeMembers.filter(member => {
-                member.id !== data.id
-            }))
+            setActiveMembers(activeMembers.filter( member => member.id !== data.id ))
         })
 
         channel.bind('message', (data: Message) => {
