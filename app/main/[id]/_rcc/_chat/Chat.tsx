@@ -35,12 +35,10 @@ export default function Chat(){
         });
         
         channel.bind('client-member-joined', (data: ActiveMember) => {
-            console.log(data);
             setActiveMembers([...activeMembers, data]);
         })
 
         channel.bind('client-member-left', (data: ActiveMember) => {
-            console.log('User with id ' + data.id + ' left')
             console.log(activeMembers);
             setActiveMembers(activeMembers.filter( member => member.id !== data.id ))
         })
@@ -53,7 +51,6 @@ export default function Chat(){
         loadMessages();
 
         return () => {
-            console.log('left');
             channel.trigger('client-member-left', {
                 id: session?.id!,
                 memberUsername: session?.username!,
