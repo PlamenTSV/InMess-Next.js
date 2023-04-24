@@ -40,6 +40,7 @@ export default function Chat(){
 
         channel.bind('client-member-left', (data: ActiveMember) => {
             console.log('User with id ' + data.id + ' left')
+            console.log(activeMembers);
             setActiveMembers(activeMembers.filter(member => {
                 member.id !== data.id
             }))
