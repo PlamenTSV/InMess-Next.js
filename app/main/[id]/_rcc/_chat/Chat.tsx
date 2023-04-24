@@ -38,6 +38,13 @@ export default function Chat(){
             setActiveMembers([...activeMembers, data]);
         })
 
+        channel.bind('client-member-left', (data: ActiveMember) => {
+            console.log('User with id ' + data.id + ' left')
+            setActiveMembers(activeMembers.filter(member => {
+                member.id !== data.id
+            }))
+        })
+
         channel.bind('message', (data: Message) => {
             setMessages(curr => [...curr, data]);
             console.log(data);
@@ -46,6 +53,13 @@ export default function Chat(){
         loadMessages();
 
         return () => {
+            console.log('left');
+            channel.trigger('client-member-left', {
+                id: session?.id!,
+                memberUsername: session?.username!,
+                memberIcon: session?.icon!
+            })
+
             channel.unbind_all();
             channel.unsubscribe();
             channel.disconnect();
