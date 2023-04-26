@@ -41,7 +41,7 @@ export default function Chat(){
         })
 
         channel.bind('client-update-member', (data: ActiveMember[]) => {
-            setActiveMembers(data);
+            setActiveMembers([...activeMembers, ...data]);
         })
 
         channel.bind('message', (data: Message) => {
