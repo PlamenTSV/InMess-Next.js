@@ -23,8 +23,6 @@ export default function Chat(){
         const channel = pusherClient.subscribe('private-' + activeChannel?.id);
         
         channel.bind('pusher:subscription_succeeded', () => {
-            console.log(`Subscribed to channel ${activeChannel?.id}`);
-
             const newMember = {
                 id: session?.id!,
                 memberUsername: session?.username!,
@@ -36,11 +34,15 @@ export default function Chat(){
         
         channel.bind('client-member-joined', (data: ActiveMember) => {
             setActiveMembers([...activeMembers, data]);
+            channel.trigger('client-update-member', activeMembers);
         })
 
         channel.bind('client-member-left', (data: ActiveMember) => {
-            console.log(activeMembers);
             setActiveMembers(activeMembers.filter( member => member.id !== data.id ))
+        })
+
+        channel.bind('client-update-member', (data: ActiveMember[]) => {
+            setActiveMembers(data);
         })
 
         channel.bind('message', (data: Message) => {

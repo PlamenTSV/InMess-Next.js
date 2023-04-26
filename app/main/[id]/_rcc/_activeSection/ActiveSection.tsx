@@ -1,10 +1,17 @@
 'use client';
 import { ActiveMember } from '@/utils/interfaces/ActiveMember';
+import { useEffect } from 'react';
 import { useProvider } from '../../_context/UserContext';
 import styles from './active.module.css';
 
 export default function ActiveSection(){
     const { activeMembers, setActiveMembers } = useProvider();
+
+    useEffect(() => {
+        setActiveMembers(activeMembers.filter((member, index) => {
+            return activeMembers.findIndex(o => member.id === o.id) === index;
+        }))
+    }, [activeMembers])
 
     return (
         <div className={styles.activeSection}>

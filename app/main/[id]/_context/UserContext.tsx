@@ -56,7 +56,6 @@ export default function UserProvider({ children }: {children: ReactNode}){
         }
         const sessionData = await sessionReq.json();
 
-        console.log(sessionData);
         setSession(sessionData);
     }
 
@@ -69,7 +68,6 @@ export default function UserProvider({ children }: {children: ReactNode}){
             return;
         }
 
-        console.log(channelsData.channels);
         setChannels(channelsData.channels);
     }
 
