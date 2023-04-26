@@ -33,7 +33,7 @@ export default function Chat(){
         
         channel.bind('client-member-joined', (data: ActiveMember) => {
             setActiveMembers([...activeMembers, data]);
-            channel.trigger('client-update-member', activeMembers);
+            channel.trigger('client-update-member', [...activeMembers, data]);
         })
 
         channel.bind('client-member-left', (data: ActiveMember) => {
@@ -41,7 +41,7 @@ export default function Chat(){
         })
 
         channel.bind('client-update-member', (data: ActiveMember[]) => {
-            setActiveMembers([...activeMembers, ...data]);
+            setActiveMembers(data);
         })
 
         channel.bind('message', (data: Message) => {
