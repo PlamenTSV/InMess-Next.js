@@ -52,6 +52,12 @@ export default function Chat(){
         loadMessages();
 
         return () => {
+            setActiveMembers([{
+                id: session?.id!,
+                memberUsername: session?.username!,
+                memberIcon: session?.icon!
+            }]);
+
             channel.trigger('client-member-left', {
                 id: session?.id!,
                 memberUsername: session?.username!,
